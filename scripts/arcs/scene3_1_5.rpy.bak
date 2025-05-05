@@ -1,0 +1,112 @@
+label scene3_1_5:
+    scene bg 2_floor_stair_dark with fade
+    $ time_display = "09:43 PM"
+    call show_time()
+
+    n """
+    I didn’t go home right after class.
+
+    I walked the halls.
+
+    The sun dipped. The air cooled.
+
+    And still, no one said anything.
+
+    No one mentioned him.
+    """
+
+    mc_internal """
+    There were five of us who worked on the Nemra problem.
+
+    Five voices. Five paths.
+
+    Now there are four.
+
+    And no one remembers the fifth.
+    """
+
+    play sound "footsteps_reverb.ogg"
+    n "I pause at the railing. Stare into the dark below."
+
+    mc_internal """
+    Was it the wrong question?
+
+    The wrong choice?
+
+    Did something decide he was unnecessary?
+    """
+
+    # Group chat interaction
+    n "I pull out my device. Open the group chat: \"Study Squad\""
+    n "• 🟢 Girl C\n• 🟢 Boy B\n• ❌ (blank space)"
+    n "I stare. Then the list snaps closed. Reorders. Four names."
+
+    # Bulletin board
+    scene bg hallway_night with fade
+    n "I walk past the bulletin board. Something’s off."
+    n "A flier is missing. Torn edges. Blank space. A name tag below it — faded. Not blank. Faded."
+
+    mc_internal """
+    Decision trees choose what matters.
+
+    Split. Classify. Discard.
+
+    But this isn’t a tree. It’s a system.
+
+    And something is pruning it from above.
+
+    Not based on logic. But on utility.
+    """
+
+    n "I stop at the hallway window."
+
+    n "Am I useful?"
+    n "Am I next?"
+    n "Is remembering the wrong choice?"
+
+    menu:
+        "What do you feel right now?"
+        "Confused. Angry. Determined.":
+            $ reflection_score += 1.5
+            $ emotional_mode = "defiant"
+            mc_internal "I won’t vanish quietly."
+        "Just scared. I want this to stop.":
+            $ reflection_score += 1.0
+            $ emotional_mode = "scared"
+            mc_internal "I can’t handle much more of this."
+        "It’s fine. I’m probably imagining things.":
+            $ reflection_score -= 1.0
+            $ emotional_mode = "denial"
+            mc_internal "I’m just tired. That’s all this is."
+
+    n "I place a hand on the glass."
+
+    mc_internal """
+    What happens to a branch the model doesn’t need?
+
+    What happens when I stop being relevant?
+    """
+
+    if remembering >= 2 or glitches >= 3:
+        menu:
+            "Something stirs — a feeling. What do you do?"
+            "Text Girl C. Ask if she remembers too.":
+                $ rel_girl_c += 1
+                $ girl_c_trusts_you = True
+                mc_internal "She responds with three words: 'Meet me tomorrow.'"
+                n "You stare at the screen. The message fades. Your inbox says: 'No messages.'"
+            "Follow the flicker down the stairwell.":
+                $ glitches += 1
+                $ reflection_score += 1
+                n "You descend into a floor that doesn’t exist on the map."
+                n "No posters. No sounds. Just a locked door… and the number 404."
+            "Ignore it. Go home.":
+                $ reflection_score += 0
+                mc_internal "Maybe silence is safer than answers."
+    
+    $ glitch_memory_trigger = True
+
+    $ time_display = "09:43 PM"
+    call show_time()
+
+    return

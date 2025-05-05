@@ -1,0 +1,174 @@
+label scene3_3:
+    scene bg classroom_board_with_desk_bw with fade
+    $ time_display = "09:00 AM"
+    call show_time()
+
+    n """
+    The final class before the quiz.
+    """
+
+    call scene_3_3_event
+
+    n "I step inside. The room is full again — or seems to be. Silhouettes. Motionless."
+
+    mc_internal """
+    I can’t see their faces.
+
+    No chatter.
+
+    No whisper.
+
+    No warmth.
+
+    Just seats filled with… shapes.
+    """
+
+    n "Slide on the projector reads: \"FINAL SYSTEM INTEGRATION\""
+
+    # "Hayashi (softly)":
+    "A framework is a structure."
+    "It tells the system how to learn, without telling it what it’s learning."
+
+    n "I blink. The slide changes — but Hayashi never touched anything."
+
+    # "Hayashi":
+    "TensorFlow. PyTorch. Theano. MXNet. SystemML."
+    "They don’t explain."
+    "They don’t justify."
+    "They just train."
+
+    mc_internal "Like us."
+
+    n "The screen shows a black box model diagram."
+    n "Input → Hidden Layers → Output → ? → Prediction"
+
+    # "Hayashi":
+    "The more powerful the system, the less we understand its decisions."
+    "Abstraction is the cost of complexity."
+
+    n "One student raises a hand. The screen flickers. Their face is missing. Their voice cuts out."
+    menu:
+        "Do you react when the student fades out?"
+        "Say something. Loudly.":
+            $ remembering += 0.5
+            n "Stop. He just asked a question—"
+            n "No one responds. No one looks. Hayashi continues, unaffected."
+        "Do nothing. Just watch.":
+            mc_internal "Another one gone. I can’t keep track."
+        "Look away.":
+            $ glitches += 1
+            mc_internal "It’s safer not to watch when the pattern breaks."
+
+
+    # "Hayashi":
+    "You do not need to understand the model."
+    "You only need to trust its results."
+
+    $ time_display = "09:43 AM"
+    call show_time()
+
+    n "Half the class fades into static. Only I remain. Hayashi keeps teaching."
+
+    scene black with fade
+    pause 2.0
+    if reflection_score >= 8:
+        mc_internal "This isn’t a class anymore. It’s a test. But not the kind with answers."
+    elif glitches >= 5:
+        mc_internal "This version of the class isn’t stable. Something’s rewriting it in real-time."
+    elif glitch_memory_trigger:
+        mc_internal "There was something in the system code. A root path. I saw it. I know I did."
+
+    jump scene3_3_quiz
+
+
+label scene3_3_event:
+    python:
+        if glitches >= 4:
+            renpy.say(mc_internal, "There’s static at the edge of my hearing. Like the system’s trying to stabilize itself.")
+        elif remembering >= 3:
+            renpy.say(mc_internal, "Something’s off. Not just the air — the timeline. I know what happened. Even if they don’t.")
+        elif reflection_score >= 7:
+            renpy.say(mc_internal, "We’ve learned so much. But I still feel like I’m missing the *point*.")
+
+label scene3_3_quiz:
+    scene bg classroom_board_with_desk_bw with fade
+    n "The projector flickers. A new slide appears."
+    n "\"Chapter 3 – Model Integration Quiz\""
+
+    mc_internal "System Feedback Enabled."
+
+    # Question 1
+    menu:
+        "1. What are the three main categories of Machine Learning approaches?"
+        "Recursive, Abstracted, Symbolic":
+            $ quiz_score += 0
+        "Training, Testing, Deployment":
+            $ quiz_score += 0
+        "Supervised, Unsupervised, Reinforcement":
+            $ quiz_score += 1
+        "Local, Global, Optimized":
+            $ quiz_score += 0
+
+    # Question 2
+    menu:
+        "2. What is the main mechanism behind how a Decision Tree makes predictions?"
+        "Assigning weights to features":
+            $ quiz_score += 0
+        "Using a neural network to estimate probabilities":
+            $ quiz_score += 0
+        "Randomly sampling data subsets":
+            $ quiz_score += 0
+        "Recursively splitting data based on attributes":
+            $ quiz_score += 1
+
+    # Question 3
+    menu:
+        "3. What do Deep Learning frameworks provide?"
+        "Real-time predictions using traditional programming":
+            $ quiz_score += 0
+        "Fundamental tools for building and training models":
+            $ quiz_score += 1
+        "Pre-labeled datasets for supervised learning":
+            $ quiz_score += 0
+        "Manual instructions for linear models":
+            $ quiz_score += 0
+
+    # Question 4
+    menu:
+        "4. Which of the following is not listed as a Deep Learning framework in the lecture?"
+        "Caffe":
+            $ quiz_score += 0
+        "CNTK":
+            $ quiz_score += 0
+        "Torch":
+            $ quiz_score += 0
+        "Keras":
+            $ quiz_score += 1
+
+    # Question 5
+    menu:
+        "5. What does “abstraction” in Deep Learning typically involve?"
+        "Increasing the number of neurons per layer":
+            $ quiz_score += 0
+        "Hiding model structure and focusing on outcome":
+            $ quiz_score += 1
+        "Using only labeled data to reduce error":
+            $ quiz_score += 0
+        "Visualizing decision paths explicitly":
+            $ quiz_score += 0
+
+    n "The quiz ends. The screen fades."
+    scene bg classroom_board_with_desk_bw with fade
+    pause 1.5
+
+    if quiz_score >= 4:
+        mc_internal "Most of that felt… easy. Like I remembered it before he said it."
+    elif quiz_score == 3:
+        mc_internal "Some answers were guesses. But they felt right."
+    else:
+        mc_internal "Was I even here for these lessons? My mind’s a scatterplot."
+
+    if remembering >= 4:
+        mc_internal "But I remember who disappeared. And no quiz score changes that."
+
+    return

@@ -1,0 +1,1041 @@
+label scene2d:
+    $ reset_stat("physics_skill")
+    $ set_outcome("lesson2d", "unset")
+
+    call update_flowchart_status("scene2d") from _call_update_flowchart_status_1
+
+    play music "lesson_theme.mp3"
+    scene bg classroom_board_no_desk with fade
+    show hinata neutral_closed at center with dissolve
+
+    n "The classroom murmurs as a new face steps to the front — confident posture, IBM lanyard glinting."
+
+    show hinata smile_closed
+    hinata "Good morning, everyone. I'm Hinata, and I'll be stepping in for Hayashi today."
+
+    show hinata happy_closed
+    hinata "Don't worry — I won't make n build a neural net before lunch. But I *will* make n think."
+
+    mc_internal "She's sharp. Knows the room. I like that."
+
+    n "She clicks the projector. The first slide appears."
+
+    show slide deterministic_slide at slide_pos with dissolve # The F = ma slide
+
+    show hinata thinking_closed at right with dissolve
+    hinata "Let's begin where your instructor left off — deterministic systems."
+
+    show hinata neutral_closed
+    hinata "In these systems, the outcome is 100%% predictable. If acceleration is 10 m/s² and mass is 1kg, then the force is exactly 10N. Always."
+    call update_flowchart_status("deterministic_choice")
+    python:
+        deterministic_choices = [
+            {
+                "prompt": "How do n feel about deterministic systems?",
+                "text": "Reassuring. Rules give comfort.",
+                "next_label": "deterministic_choice_comfort",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 1
+                    }
+                }
+            },
+            {
+                "prompt": "How do n feel about deterministic systems?",
+                "text": "Too rigid. Real life's never that neat.",
+                "next_label": "deterministic_choice_rigid",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 0.5
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(deterministic_choices)
+        return_label = "deterministic_post_choice"
+    jump handle_dynamic_choice
+
+label backprop_correct:
+    hinata "Exactly. Gradients help us know which weights caused the error — and how to fix them, step by step."
+    jump backprop_post_choice
+    return
+
+label backprop_wrong:
+    hinata "Nope — neural networks don’t delete parts of themselves. They learn by fine-tuning weights, not pruning structure."
+    jump backprop_post_choice
+    return
+
+label backprop_post_choice:
+    
+    hinata "ANNs aren’t just theories. They power Google search, voice assistants, even self-driving cars."
+
+    hinata "Their strength? They learn from data — and they don’t forget."
+    stop music fadeout 0.5
+    play music "wakeup_theme.mp3" fadein 0.5
+    play audio "change_room_2.wav"
+    play audio "hallway_full_sound.mp3"
+    play audio "bell_ring.mp3"
+    
+
+    scene black with fade
+    pause 2.5
+
+    python:
+        if has_stat_minimum("ml_skill", 3) and has_stat_minimum("remembering", 1):
+            set_outcome("lesson2e", "success")
+        elif has_stat_minimum("ml_skill", 2):
+            set_outcome("lesson2e", "partial")
+        else:
+            set_outcome("lesson2e", "fail")
+    return
+
+label cost_function_correct:
+    hinata "Yes — that's our error. The cost function tells us how wrong the model’s guess was."
+    jump cost_function_post_choice
+    return
+
+label cost_function_wrong:
+    hinata "Ah, no — cost has nothing to do with how many neurons activate. It’s purely about how far off the prediction is."
+    jump cost_function_post_choice
+    return
+
+label cost_function_post_choice:
+    
+
+    show slide backpropagation_slide with dissolve
+    hinata "So how do we learn from mistakes? With backpropagation."
+    show hinata neutral_closed
+    hinata "It’s the backward flow of error — adjusting the network’s weights layer by layer using gradients."
+    hinata "This is where machines change. Grow. Get better."
+
+    python:
+        backpropagation_choices = [
+            {
+                "prompt": "How does backpropagation work?",
+                "text": "It adjusts weights using gradients of the cost function.",
+                "next_label": "backprop_correct",
+                "impact": {
+                    "branches": {
+                        "ml_skill": 1
+                    }
+                }
+            },
+            {
+                "prompt": "How does backpropagation work?",
+                "text": "It deletes neurons that made mistakes.",
+                "next_label": "backprop_wrong",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(backpropagation_choices)
+        return_label = "backprop_post_choice"
+    jump handle_dynamic_choice
+    return
+
+label sigmoid_correct:
+    hinata "Correct. Sigmoid squashes values into a smooth curve between 0 and 1 — useful when treating outputs like probabilities."
+    jump sigmoid_post_choice
+    return
+
+label sigmoid_wrong:
+    hinata "That's a common mix-up. Sigmoid doesn’t hit exact zero — it compresses values smoothly. Even 'wrong' outputs get some weight."
+    jump sigmoid_post_choice
+    return
+
+label sigmoid_post_choice:
+    
+    show slide cost_function_slide with dissolve
+    hinata "Now let’s say the network makes a guess — like predicting someone’s test score."
+    hinata "We compare it to the real result. That difference is the error, or loss."
+    show hinata thinking_closed
+    hinata "We calculate that using a cost function. One common version: J = ½(y - ŷ)²."
+    hinata "The lower the cost, the better our prediction."
+    python:
+        cost_function_choices = [
+            {
+                "prompt": "What is the cost function trying to minimize?",
+                "text": "The squared difference between prediction and actual value.",
+                "next_label": "cost_function_correct",
+                "impact": {
+                    "branches": {
+                        "ml_skill": 1,
+                        "remembering": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What is the cost function trying to minimize?",
+                "text": "The number of activated neurons.",
+                "next_label": "cost_function_wrong",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(cost_function_choices)
+        return_label = "cost_function_post_choice"
+    jump handle_dynamic_choice
+    return
+
+label neuron_activation_correct:
+    hinata "Exactly. The neuron only fires if the combined input — after weights — passes a threshold."
+    jump neuron_activation_post_choice
+    return
+
+label neuron_activation_wrong:
+    hinata "Not quite. A neuron doesn’t fire from a single input alone — it sums all weighted inputs and checks if it’s enough."
+    jump neuron_activation_post_choice
+    return
+
+label neuron_activation_post_choice:
+    
+    show hinata neutral_closed
+    call update_flowchart_status("neuralnet_intro")
+    hinata "Neural nets have layers: input, hidden, and output. Each layer transforms the signal slightly — learning patterns as it goes."
+
+    show slide sigmoid_operation_slide with dissolve
+
+    hinata "Inside each node, inputs are multiplied by weights, summed up, and passed through something called an activation function."
+
+    hinata "Most often, that’s the sigmoid function: a = 1 / (1 + e^-z). It squashes outputs between 0 and 1."
+
+    show hinata happy_closed
+    hinata "Why? To give the network control — like a neuron whispering instead of shouting."
+
+    python:
+        sigmoid_function_choices = [
+            {
+                "prompt": "What is the purpose of the sigmoid activation function?",
+                "text": "To normalize the output between 0 and 1.",
+                "next_label": "sigmoid_correct",
+                "impact": {
+                    "branches": {
+                        "ml_skill": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What is the purpose of the sigmoid activation function?",
+                "text": "To make the output zero for wrong predictions.",
+                "next_label": "sigmoid_wrong",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(sigmoid_function_choices)
+        return_label = "sigmoid_post_choice"
+    jump handle_dynamic_choice
+
+    return
+
+
+label regression_quiz_logistic:
+    mc_internal "It's about probability. Like whether someone will accept an offer."
+    jump regression_quiz_post_choice
+
+    return
+
+label regression_quiz_linear:
+    mc_internal "That's for continuous predictions... right?"
+    jump regression_quiz_post_choice
+    return
+
+label regression_quiz_post_choice:
+    
+
+    hinata "Remember — data teaches. But *n* decide what's worth learning."
+
+    play audio "bell_ring.mp3"
+
+    mc_internal "Even as the bell rings, her voice stays with me."
+
+    scene black with fade
+    pause 2
+    python:
+        if has_stat_minimum("physics_skill", 2) and has_stat_minimum("remembering", 1):
+            set_outcome("lesson2d", "success")
+        elif has_stat_minimum("physics_skill", 1):
+            set_outcome("lesson2d", "partial")
+        else:
+            set_outcome("lesson2d", "fail")
+
+    scene bg classroom_board_no_desk with fade
+    show hinata smile_closed
+    hinata "For the second part of the lesson, let’s talk about artificial neural networks — or ANNs — the digital brains behind modern AI."
+    show hinata smile_closed at right with dissolve
+    show slide neuralnet_structure_slide at slide_pos2 with dissolve
+
+    show hinata thinking_closed
+    hinata "They mimic how biological neurons work. Each node receives signals, applies weights, checks if it passes a threshold — then fires or doesn’t."
+
+    python:
+        neuron_activation_choices = [
+            {
+                "prompt": "What causes a neuron in a neural network to activate?",
+                "text": "Its weighted input exceeds a threshold.",
+                "next_label": "neuron_activation_correct",
+                "impact": {
+                    "branches": {
+                        "ml_skill": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What causes a neuron in a neural network to activate?",
+                "text": "It gets a signal from any other node.",
+                "next_label": "neuron_activation_wrong",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(neuron_activation_choices)
+        return_label = "neuron_activation_post_choice"
+    jump handle_dynamic_choice
+    return
+
+label regression_choice_logical:
+    mc_internal "Seems fair enough."
+    jump regression_post_choice
+    return
+
+label regression_choice_guesswork:
+    mc_internal "People aren't equations. But it's a start."
+    jump regression_post_choice
+    return
+
+label regression_post_choice:
+    show slide optimization_slide with dissolve
+    hinata "Last bit — optimization. Imagine trying to climb a hill blindfolded, in as few steps as possible."
+
+    call update_flowchart_status("backprop_lesson")
+    hinata "That's what machines do. Guess. Adjust. Repeat. It's what we call 'backpropagation.'"
+
+    mc_internal "It's strange — but it makes sense. Machines learn like we do. Sometimes... better."
+
+    # Quiz Option
+    python:
+        regression_quiz_choices = [
+            {
+                "prompt": "What type of regression fits predicting a yes/no outcome?",
+                "text": "Logistic regression.",
+                "next_label": "regression_quiz_logistic",
+                "impact": {
+                    "branches": {
+                        "physics_skill": 1,
+                        "remembering": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What type of regression fits predicting a yes/no outcome?",
+                "text": "Linear regression.",
+                "next_label": "regression_quiz_linear",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(regression_quiz_choices)
+        return_label = "regression_quiz_post_choice"
+        
+    jump handle_dynamic_choice
+    return
+label deterministic_choice_comfort:
+    mc_internal "Knowing the outcome helps me breathe easier."
+    jump deterministic_post_choice
+    return
+
+label deterministic_choice_rigid:
+    mc_internal "Systems like that don't exist outside the board."
+    jump deterministic_post_choice
+
+label deterministic_post_choice:
+    show slide probabilistic_slide with dissolve
+
+    show hinata thinking_closed
+    hinata "But reality rarely fits that mold. Enter probabilistic systems."
+
+    show hinata neutral_closed
+    hinata "Let's say n're driving from Detroit to Chicago. Weather, traffic, flat tires — good luck predicting that exactly."
+
+    show slide s_curve_slide with dissolve
+
+    hinata "This curve? That's the real world. It starts slow, accelerates fast, then saturates."
+
+    hinata "It's the shape of how neurons spike, how popcorn pops, how economies evolve."
+
+    mai "Popcorn?"
+
+    hinata "Yes — kernels don't all pop at once. They wait... then explode. S-curves. Everywhere."
+
+    python:
+            scurve_choices = [
+                {
+                    "prompt": "What do n think of the S-curve analogy?",
+                    "text": "It explains so much suddenly.",
+                    "next_label": "scurve_choice_understand",
+                    "impact": {
+                        "branches": {
+                            "remembering": 1
+                        }
+                    }
+                },
+                {
+                    "prompt": "What do n think of the S-curve analogy?",
+                    "text": "It makes me nervous. Too chaotic.",
+                    "next_label": "scurve_choice_uncomfortable",
+                    "impact": {
+                        "branches": {
+                            "glitches": 1
+                        }
+                    }
+                },
+            ]
+
+            dynamic_choices = build_reflection_choices(scurve_choices)
+            return_label = "scurve_post_choice"
+    jump handle_dynamic_choice
+    return
+
+label scurve_choice_understand:
+    mc_internal "The sudden shifts — they're everywhere once n look."
+    jump scurve_post_choice
+    return
+
+label scurve_choice_uncomfortable:
+    mc_internal "The unpredictability in life... it's uncomfortable."
+    jump scurve_post_choice
+    return
+
+label scurve_post_choice:
+    
+    
+    show slide regression_slide with dissolve
+
+    hinata "Let's talk regression. n want to predict your grade based on how long n studied and slept."
+
+    hinata "That's regression. Specifically, supervised learning."
+
+    python:
+        regression_choices = [
+            {
+                "prompt": "How would n describe that example?",
+                "text": "It's logical — study more, sleep better, get higher grades.",
+                "next_label": "regression_choice_logical",
+                "impact": {
+                    "branches": {
+                        "physics_skill": 1
+                    }
+                }
+            },
+            {
+                "prompt": "How would n describe that example?",
+                "text": "Still feels like guesswork.",
+                "next_label": "regression_choice_guesswork",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 0.5
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(regression_choices)
+        return_label = "regression_post_choice"
+    jump handle_dynamic_choice
+    return
+
+label scene2d_transition:
+
+    scene bg hallway_day
+    with dissolve
+    show i_eren smile1 at character_base_pose_right_eren with dissolve
+    eren "Finally! I thought that lecture would never end."
+    "You and Eren step into the hallway. The air feels lighter, but something in his posture seems tense."
+
+    scene bg school_back_day
+    with fade
+    show i_eren smile2 at character_base_pose_right_eren with dissolve
+    eren "You've been keeping it together pretty well lately. Better than me, honestly."
+    menu:
+        "Play it off":
+            n "What, me? Nah, I'm just good at faking it."
+            show i_eren smile3 at character_base_pose_right_eren with dissolve
+            eren "Heh. I knew it."
+        "Be honest":
+            n "Some days I feel like I'm barely holding it all together."
+            show i_eren unhappy at character_base_pose_right_eren with dissolve
+            eren "Yeah. Same."
+    play audio "train_sound.wav"
+    play music train_inside fadein 0.5
+    scene bg train_day2
+    with dissolve
+    show i_eren smile1 at character_base_pose_right_eren with dissolve
+    eren "I swear, if I hear the word 'convergence' one more time…"
+    n "Better get used to it. Cost functions are next."
+    show i_eren confused1 at character_base_pose_right_eren with dissolve
+    eren "Ugh. Just once I want to hear a professor say, 'You know what? Never mind.'"
+    play music "courtyard_piano.mp3" fadein 0.5 fadeout 0.5
+
+    scene bg shopping_street_day
+    with fade
+    play audio "shopping_street_ambiance.wav" fadein 0.5 fadeout 0.5
+    "You're laughing when n spot Mai up ahead."
+
+    show i_mai smile1 at character_base_pose_left_mai with dissolve
+    mai "Hey! Didn't expect to see n two here."
+    show i_eren confused1 at character_base_pose_right_eren with dissolve
+    eren "Hey, Mai. Nice bag—wait, is that your sketchbook sticking out?"
+
+    show i_mai smile2 at character_base_pose_left_mai with dissolve
+    mai "Yeah. I was just—"
+
+    show i_mai shocked1 at character_base_pose_left_mai with dissolve
+    "Suddenly, her smile vanishes. She checks her bag. Again. Then again."
+    play music "stress_theme.wav" fadein 0.5
+
+
+    mai "...No. No, no, no—"
+    stop audio
+    
+    play audio "phone_buzz.mp3"
+    "At the same time, Eren's phone buzzes. He reads the message and stops walking."
+
+    show i_eren shocked1 at character_base_pose_right_eren with dissolve
+    eren "…[player_name]."
+
+    scene bg store_open_sunset with dissolve
+    with dissolve
+
+    "Eren grabs your arm. Tight."
+
+    show i_eren unhappy at character_center_zoom_eren with dissolve
+    eren "I need your help. Right now."
+
+    n "What is it?"
+
+    "He shows n a message from his younger brother."
+
+    centered "{i}'I'm going to look for Kuma. Don't tell mom.  I'll be back before sunset.'{/i}"
+
+    eren "Kuma got out this morning. I thought he was still in the house."
+
+    eren "Now my little brother went out looking for him. And he hasn't answered since."
+
+    "He's trying to stay calm, but his voice is shaking."
+
+    eren "Last time... when our old cat disappeared, we never saw her again. My brother was crushed."
+
+    eren "If anything happens to him—"
+
+    "He swallows hard."
+
+    eren "I can't go through that again."
+
+    "Before n can respond, Mai suddenly speaks, panicked."
+
+    hide i_eren with dissolve
+    show i_mai shocked1 at character_center_zoom_mai with dissolve
+
+    mai "[player_name]—I lost my sketchbook."
+
+    "She holds up her bag, eyes wide with dread."
+
+    mai "It's not just drawings. I was going to give it to my dad."
+
+    n "Wait... your dad?"
+
+    mai "He reached out after years. Said he wanted to see me. He's only in town today."
+
+    "Her voice cracks."
+
+    mai "I put everything in there. Memories. Letters. Things I was never brave enough to say out loud."
+
+    "She looks down at the pavement, barely holding it together."
+
+    mai "If I don't find it… I'm not going."
+
+    "The street is quiet. Your heart pounds."
+
+    "Two people. Two emergencies. And not enough time."
+
+
+    show i_mai shocked1 at character_base_pose_left_mai with dissolve
+    show i_eren unhappy at character_base_pose_right_eren with dissolve
+    call update_flowchart_status("scene2d_transition") from _call_update_flowchart_status_2
+
+    menu(time=2, timeout="scene2d_indecisive"):
+        # timeout 6.0
+        n "Choose who to help — time is running out"
+
+        "Help Mai recover her sketchbook for her father":
+            $ set_text_var("relationship_key", "mai")
+            call update_flowchart_status("help_mai") from _call_update_flowchart_status_3
+            $ increase_rel("mai")
+            $ set_flag("helped_mai_sketchbook")
+            show i_mai smile2 at character_center_zoom_mai with dissolve
+            n "Let's go. He needs to see what n made."
+            mai "Thank you… I really didn't want to face this alone."
+            call friendship_outcome from _call_friendship_outcome
+
+
+        "Help Eren find his brother and the cat before dark":
+            $ set_text_var("relationship_key", "eren")
+            $ increase_rel("eren")
+            call update_flowchart_status("help_eren") from _call_update_flowchart_status_4
+            $ set_flag("helped_eren_search")
+            show i_mai unsatisfied at character_base_pose_left_mai with dissolve
+            show i_eren smile1 at character_center_zoom_eren with dissolve
+            n "Come on. Let's bring them home."
+            eren "...Thank n. I needed someone right now."
+            call friendship_outcome from _call_friendship_outcome_1
+
+    # menu:
+    #     n "What would n like to do?"
+        # "View Flowchart":
+        #     call screen detroit_flowchart(act_title="ACT 1: HOSTAGE SITUATION")
+        #     jump scene2e
+    
+    return
+
+label friendship_outcome:
+    play music "memory.ogg" fadein 0.5 fadeout 0.5
+
+    scene bg station_evening with fade
+    n "The train hums softly. The city lights blur past the window as we race against the ticking clock."
+
+    n "Something stirs in the back of my mind... a memory from earlier."
+
+    scene bg classroom_board_no_desk with fade
+    show hinata neutral_closed at center
+    n "Hinata’s voice echoes like a bell."
+
+    show hinata thinking_closed
+    hinata "Split into subsets. If they're all pure, you're done. If not—branch again."
+
+    show hinata smile_closed
+    hinata "Look for the strongest signal. Weather. Then type of calls. Then movement."
+
+    scene bg train_day with fade
+    # play audio "train_sound.wav" fadein 0.5 fadeout 0.5
+    play audio "train_ambiance.wav" fadein 0.5 fadeout 0.5
+    play audio train_inside fadein 0.5 volume 0.5
+    n "Right. Decision trees. Narrow the options. Follow the signals."
+
+    scene black with fade
+    pause 0.5
+    
+    centered "{cps=10}{size=+20}{color=#FF0000}YOU TRY TO REMEMBER...{/color}{/size}{/cps}"
+
+    $ flashback_target = "sketchbook" if has_flag("helped_mai_sketchbook") else "Kuma"
+
+
+    centered "{cps=10}{size=+20}{color=#FF0000}THIS LESSON IS IMPORTANT.{/color}{/size}{/cps}"
+
+    centered "{cps=10}{size=+20}{color=#FF0000}IT HOLDS THE KEY TO FINDING THE MISSING [flashback_target]..{/color}{/size}{/cps}"
+
+    stop audio
+    call classifier_teaching from _call_classifier_teaching
+
+
+
+    return
+
+label after_classifier:
+    play audio train_inside fadein 0.5 fadeout 0.5 volume 0.2
+    play music "stress_theme.wav" fadein 0.5 fadeout 0.5
+    if has_flag("helped_mai_sketchbook"):
+        scene bg train_day with fade
+        show i_mai smile1 at character_center_zoom_mai with dissolve
+        mai "I remember passing a few spots where I stopped earlier. Maybe we can retrace from there?"
+
+        menu:
+            n "What's the strongest signal for where to search first?"
+
+            "Lockers — she passed there and someone may have moved it. (lockroom_evening)":
+                $ location_1 = "lockroom"
+                $ increase_stat("remembering")
+                stop audio
+                jump search_lockroom
+
+            "Storefront — high visibility but unpredictable. (store_closed_night)":
+                $ location_1 = "store"
+                $ increase_stat("physics_skill")
+                stop audio
+
+                jump search_storefront
+
+            "Hayashi’s Office — a wildcard. (LOCKED unless full score)":
+                if get_outcome("classifer_lesson") == "success":
+                    $ location_1 = "office"
+                    stop audio
+
+                    jump search_office
+                else:
+                    n "Too unpredictable. I need stronger signals."
+                    stop audio
+                    jump friendship_outcome
+
+    elif has_flag("helped_eren_search"):
+        
+        scene bg train_day with fade
+        show i_eren smile1 at character_base_pose_right_eren with dissolve
+        eren "Okay. If I were my brother… where would I go first?"
+
+        n "Hinata’s words echo again: Find the feature that best splits the data."
+        stop audio
+        call choose_kuma_search_location from _choose_kuma_search_location
+
+    return 
+label choose_kuma_search_location:
+    play music "stress_theme.wav" fadein 0.5 fadeout 0.5
+    scene bg schoolway_2_night with fade
+
+    python:
+        choice1_text = "School Back — Kuma hid there last time. Strong precedent. (school_back_night)"
+        choice1_locked = get_outcome("classifier_lesson") == "fail"
+
+        if choice1_locked:
+            choice1_text = "??? — You can’t recall where he might be... (Locked)"
+
+    menu:
+        n "Which location gives the strongest likelihood of finding them?"
+
+        "[choice1_text]":
+            if choice1_locked:
+                n "You hesitate. Something about the lesson... it didn’t stick."
+                jump choose_kuma_search_location
+            else:
+                $ location_2 = "school_back"
+                $ increase_stat("remembering")
+                jump search_school_back
+
+        "Courtyard — peaceful but lower chance. (courtyard_night)":
+            $ location_2 = "courtyard"
+            $ increase_stat("reflection_score")
+            jump search_courtyard
+
+label search_storefront:
+    scene bg store_closed_night with fade
+    n "The display is still lit, but no sign of the sketchbook."
+    if get_outcome("classifer_lesson") in ["success", "partial"]:
+        show i_mai smile3 at character_center_zoom_mai
+        mai "Wait! Behind that bench—there!"
+        $ set_flag("mai_search_success")
+        $ set_text_var("friend_locked", "mai")
+    else:
+        show i_mai unsatisfied at character_center_zoom_mai
+        mai "Nothing. Let's keep going."
+        $ set_flag("mai_search_fail")
+    jump scene2e_transition
+
+label search_lockroom:
+    scene bg lockroom_evening with fade
+    n "The hallway feels eerie at night."
+    if get_outcome("classifer_lesson") == "success":
+        show i_mai satisfied at character_center_zoom_mai
+        call update_flowchart_status("sketchbook_found")
+        mai "Yes! It's here — someone must’ve picked it up and left it here."
+        $ set_flag("mai_search_success")
+        $ set_text_var("friend_locked", "mai")
+    else:
+        show i_mai angry1 at character_center_zoom_mai
+        call update_flowchart_status("sketchbook_lost")
+        mai "Still no sign of it..."
+        $ set_flag("mai_search_fail")
+    jump scene2e_transition
+
+label search_office:
+    scene bg hayashi_office_black_white with fade
+    n "The atmosphere changes. The air is heavier, grayscale."
+    show i_mai smile2 at character_center_zoom_mai
+    mai "It… it’s here. Thank you."
+    $ set_flag("mai_search_success")
+    $ set_text_var("friend_locked", "mai")
+    jump scene2e_transition
+
+label search_courtyard:
+    scene bg courtyard_night with fade
+    n "Wind rustles the trees."
+    if get_outcome("classifer_lesson") in ["success", "partial"]:
+        show i_eren smile3 at character_center_zoom_eren
+        eren "There they are! My brother and Kuma — safe."
+        call update_flowchart_status("kuma_found")
+        $ set_flag("eren_search_success")
+        $ set_text_var("friend_locked", "eren")
+    else:
+        call update_flowchart_status("kuma_lost")
+        show i_eren confused1 at character_center_zoom_eren
+        eren "No sign. Let's check somewhere else."
+        $ set_flag("eren_search_fail")
+    jump scene2e_transition
+
+label search_school_back:
+    scene bg school_back_night with fade
+    n "The empty field echoes every step."
+    if get_outcome("classifer_lesson") == "success":
+        show i_eren smile2 at character_center_zoom_eren with dissolve
+        eren "Kuma! And my brother’s here too!"
+        $ set_flag("eren_search_success")
+        $ set_text_var("friend_locked", "eren")
+    else:
+        show i_eren frustrated_angry at character_center_zoom_eren with dissolve
+        eren "Still nothing. We're losing time."
+        $ set_flag("eren_search_fail")
+    jump scene2e_transition
+
+label classifier_flashback:
+
+    
+    scene bg classroom_board_no_desk at flashback_effect_1 with fade
+    show hinata neutral_closed at center
+
+    n "Hinata's voice echoes like a bell."
+
+    show hinata thinking_closed
+    hinata "Split into subsets. If they're all pure, you're done. If not—branch again."
+
+    show hinata smile_closed
+    hinata "Look for the strongest signal. Weather. Then type of calls. Then movement."
+
+    scene bg train_day with fade
+    return
+
+label classifier_teaching:
+    call update_flowchart_status("classifier_lesson")
+    $ time_display = "Tuesday, 10:00 AM"
+    call show_time() from _call_show_time
+    $ reset_stat("physics_skill")
+    $ set_outcome("classifier_lesson", "unset")
+
+    call update_flowchart_status("classifer_lesson") from _call_update_flowchart_status_5
+    stop music 
+    stop audio
+    
+    play music "lesson_theme.mp3"
+    scene bg classroom_board_no_desk with fade
+    show hinata neutral_closed at center with dissolve
+
+    show hinata smile_closed
+    hinata "Good morning, everyone."
+    show hinata thinking_closed at right with dissolve
+
+    show slide predict_nemra_slide at slide_pos3 with dissolve
+
+    hinata "Imagine this: Nemra works at IBM. Some days she commutes. Some days she works from home."
+
+    show hinata neutral_closed
+    hinata "We want to predict if she’ll go to the office using a method called a decision tree."
+
+    hinata "A decision tree splits data into smaller pieces based on key features — like the weather or her exercise habits."
+
+    hinata "The goal is to keep dividing until each group — or branch — only contains one kind of answer. That’s called a pure subset."
+
+    python:
+        first_split_choices = [
+            {
+                "prompt": "What’s the first feature we should split by?",
+                "text": "Weather condition.",
+                "next_label": "first_split_weather",
+                "impact": {
+                    "branches": {
+                        "physics_skill": 1,
+                        "remembering": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What’s the first feature we should split by?",
+                "text": "Type of calls scheduled.",
+                "next_label": "first_split_calls",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 0.5
+                    }
+                }
+            }
+        ]
+
+        dynamic_choices = build_reflection_choices(first_split_choices)
+        return_label = "first_split_post_choice"
+    jump handle_dynamic_choice
+
+label first_split_weather:
+    mc_internal "Weather seems like a major deciding factor."
+    jump first_split_post_choice
+
+label first_split_calls:
+    mc_internal "Could be, but might not be the first split."
+    jump first_split_post_choice
+
+label first_split_post_choice:
+
+    show slide decision_tree_slide at slide_pos3 with dissolve
+
+    hinata "Correct — weather is a strong initial indicator."
+
+    hinata "Now look at the overcast days — all of them result in a commute. That branch is pure, so we stop there."
+
+    hinata "But Sunny and Rainy days? Those still show mixed results. That’s where entropy comes in."
+
+    python:
+        sunny_split_choices = [
+            {
+                "prompt": "How should we split the Sunny days?",
+                "text": "Type of calls.",
+                "next_label": "sunny_split_calls",
+                "impact": {
+                    "branches": {
+                        "physics_skill": 1
+                    }
+                }
+            },
+            {
+                "prompt": "How should we split the Sunny days?",
+                "text": "Exercise routine.",
+                "next_label": "sunny_split_exercise",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            }
+        ]
+
+        dynamic_choices = build_reflection_choices(sunny_split_choices)
+        return_label = "sunny_split_post_choice"
+    jump handle_dynamic_choice
+label sunny_split_calls:
+    mc_internal "Call type probably influences home vs office work."
+    jump sunny_split_post_choice
+
+label sunny_split_exercise:
+    mc_internal "Possibly… but seems like a weaker signal."
+    jump sunny_split_post_choice
+
+label sunny_split_post_choice:
+
+    show slide branch_slide at slide_pos3 with dissolve
+
+    hinata "Entropy measures uncertainty. If the results are mixed, we keep splitting using the next most informative feature."
+
+    hinata "So, for Sunny days, we branch into Video vs Telephone calls."
+
+    hinata "For Rainy days, it makes sense to split based on Exercise — Gym or Walk."
+
+    python:
+        commute_prediction_choices = [
+            {
+                "prompt": "Which scenario would most strongly predict a commute?",
+                "text": "Rainy weather with walking exercise.",
+                "next_label": "commute_rain_walk",
+                "impact": {
+                    "branches": {
+                        "physics_skill": 1,
+                        "remembering": 1
+                    }
+                }
+            },
+            {
+                "prompt": "Which scenario would most strongly predict a commute?",
+                "text": "Sunny weather with video calls.",
+                "next_label": "commute_sunny_video",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            }
+        ]
+
+        dynamic_choices = build_reflection_choices(commute_prediction_choices)
+        return_label = "commute_prediction_post_choice"
+    jump handle_dynamic_choice
+label commute_rain_walk:
+    mc_internal "This path leads to a pure ‘Yes’ outcome."
+    jump commute_prediction_post_choice
+
+label commute_sunny_video:
+    mc_internal "Nope — that one predicts working from home."
+    jump commute_prediction_post_choice
+
+label commute_prediction_post_choice:
+    show slide prediction_slide at slide_pos3 with dissolve
+
+    hinata "Exactly. When we follow the path: Rain → Walk → Commute, we get a confident prediction."
+
+    hinata "Think of it like following a trail of the strongest clues."
+
+    hinata "Decision trees help machines — and humans — solve uncertainty step by step."
+
+    play audio "bell_ring.mp3"
+
+    mc_internal "Even as the bell rings, her voice stays with me. There was a structure to it. A way to think through decisions."
+
+    scene black with fade
+    pause 2.5
+
+    scene black with dissolve
+    stop music fadeout 0.5
+
+    python:
+        if has_stat_minimum("physics_skill", 2) and has_stat_minimum("remembering", 1):
+            set_outcome("classifier_lesson", "success")
+            renpy.jump("classifier_flashback_success")
+        else:
+            set_outcome("classifier_lesson", "fail")
+            renpy.jump("classifier_flashback_fail")
+
+
+    return
+
+label classifier_flashback_success:
+    centered "{size=+20}{color=#47b300}YOU HAVE REMEMBERED..{/color}{/size}"
+    pause 0.5
+    centered "{i}{size=+20}{color=#47b300}BY APPLYING THE PRINCIPLES...{/i}"
+    pause 1.0
+    jump post_classifier_redirect
+
+label classifier_flashback_fail:
+    centered "{size=+10}{color=#FF0000}YOU FORGOT..{/color}{/size}"
+    pause 0.5
+    centered "{i}YOU LOSE{/i}"
+    pause 1.0
+    jump post_classifier_redirect
+
+
+label scene2d_indecisive:
+    centered "{size=+20}{color=#FF0000}TIME IS RUNNING OUT...{/color}{/size}"
+    pause 1.0
+    centered "{i}{size=+20}{color=#FF0000}MAKE A DECISION.{/i}"
+    pause 1.0
+    return
+
+
+label post_classifier_redirect:
+    if has_flag("helped_mai_sketchbook"):
+        jump after_classifier
+    elif has_flag("helped_eren_search"):
+        jump after_classifier
+    else:
+        jump after_classifier

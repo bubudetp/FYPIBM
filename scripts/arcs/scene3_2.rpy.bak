@@ -1,0 +1,116 @@
+label scene3_2:
+    scene bg classroom_day_left with fade
+
+    n """
+    The classroom is… still.
+
+    No voices. No footsteps. No idle chatter.
+
+    Just the quiet hum of fluorescent lights, filtered through a colorless sky.
+    """
+
+    mc_internal """
+    Maybe I’m early.
+
+    Maybe they’re late.
+
+    Or maybe today’s just... focused.
+    """
+    scene bg classroom_board_no_desk with fade
+
+    n "Slide on the projector reads: \"Deep Learning Frameworks\""
+
+    n "Hayashi stands at the board — motionless. Clean lines. No shadow flicker."
+
+    "Today we scale."
+    "These are frameworks. They enable the construction, training, and deployment of deep learning models."
+
+    n "He turns, writing a list: TensorFlow. PyTorch. Caffe2. Theano. MXNet. CNTK. Deeplearning4j. SystemML."
+
+    mc_internal """
+    The words feel heavy.
+
+    Like they're being typed behind his eyes instead of spoken.
+    """
+
+    n "Wait..."
+    scene bg classroom_day_right with fade
+
+    n "I glance around. Desks: empty. No rustling. No screens. No people."
+    
+    if emotional_mode == "defiant":
+        mc_internal "They took someone. I *know* they did. I'm not letting this slide."
+    elif emotional_mode == "scared":
+        mc_internal "I shouldn’t have come in today. Something's not right."
+    elif emotional_mode == "denial":
+        mc_internal "This is normal. Weird, but normal. Class will start soon… right?"
+
+    mc_internal "Where is everyone?"
+
+    n "The clock is stuck. 09:00. No tick. No hum."
+
+    "TensorFlow operates on a computational graph. Each node is an operation. Each edge, a tensor — a unit of data."
+    "PyTorch enables dynamic computation. Researchers prefer it. More intuitive. More human."
+
+    scene white with fade
+    n "I open my notebook. The page is blank. Not unfilled — blank. No lines. Just white."
+
+    mc_internal """
+    I wrote something.
+
+    I was writing something.
+    """
+
+    "All frameworks aim for efficiency, scale, abstraction." 
+    "Abstraction means forgetting the parts. Focusing only on outcomes."
+
+    play sound "pen_drop.ogg"
+    n "My pen falls to the desk. It echoes — too loudly."
+
+    mc_internal "No one reacts. Because there’s no one left to react."
+
+    menu:
+        "What do you do?"
+        "Keep taking notes":
+            mc_internal "The pen glides over the blank page. Still no ink."
+            $ glitches += 1
+        "Look around again":
+            mc_internal "Every chair is perfectly aligned. No signs of anyone ever sitting there."
+            $ remembering += 0.5
+        "Say something aloud":
+            n "Is… anyone here?"
+            n "Only silence. Even Hayashi doesn’t respond."
+            $ glitches += 1
+            $ remembering += 0.5
+
+    
+    "System design is about removing what is unnecessary."
+    if glitches >= 4 or glitch_memory_trigger:
+        menu:
+            "A message flickers onto your desk screen — for a second only:"
+            "DO YOU WANT TO SEE THE SYSTEM ROOT?":
+                $ saw_system_prompt = True
+                mc_internal "I tap it. Instinct, maybe. Or desperation."
+                play sound "glitch_rise.ogg"
+                n "The classroom vanishes — replaced by a hallway you've never seen before. Stark. Endless. Numbered doors."
+                jump secret_path_intro
+            "Ignore it":
+                mc_internal "It’s just noise. A flicker. Nothing real."
+
+    n "He smiles. It doesn’t reach his eyes."
+
+    $ time_display = "09:43 AM"
+    call show_time()
+
+    mc_internal """
+    They’re not just gone.
+
+    They were removed.
+
+    And the system? The system didn’t flinch.
+    """
+
+    scene black with fade
+    pause 2.0
+
+    return

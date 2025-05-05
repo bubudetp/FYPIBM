@@ -1,0 +1,243 @@
+label scene2e_transition:
+    scene bg home_night with fade
+    play music "night_ambience.mp3" fadein 2.0
+
+    $ chosen_character = get_text_var("relationship_key")  # "mai" or "eren"
+    $ other_character = "eren" if chosen_character == "mai" else "mai"
+
+    if chosen_character == "mai":
+        if has_flag("mai_search_success"):
+            show mai shocked1 at character_center_zoom_mai with dissolve
+            "Mai stands frozen under the streetlight, her recovered sketchbook clutched so tightly her knuckles whiten."
+
+            show mai smile1 at character_center_zoom_mai with dissolve
+            mai "You didn't have to... why would you..." 
+            "Her voice cracks as she struggles between gratitude and something sharper."
+
+            menu:
+                "Because it mattered to you":
+                    $ increase_rel("mai", 2)
+                    show mai smile1 at character_center_zoom_mai with dissolve
+                    n "I could see how much this meant."
+                    show mai satisfied at character_center_zoom_mai with dissolve
+                    "She looks at me like I've spoken in riddles, then quickly wipes her eyes."
+
+                "Don't overthink it":
+                    $ increase_stat("reflection_score")
+                    show mai angry1 at character_center_zoom_mai with dissolve
+                    n "Just returning lost property."
+                    show mai unsatisfied at character_center_zoom_mai with dissolve
+                    mai "Of course you'd say that."
+
+            show mai smile3 at character_center_zoom_mai with dissolve
+            "For a brief moment, the ghost of a real smile appears before she turns away."
+
+        else:
+            show mai angry2 at character_center_zoom_mai with dissolve
+            "Mai sits on the curb, empty-handed. The disappointment in her eyes says everything."
+            mai "We tried. I know we did."
+
+            menu:
+                "I'm sorry we couldn't find it":
+                    $ increase_stat("reflection_score")
+                    show mai unsatisfied at character_center_zoom_mai with dissolve
+                    n "Some things just slip away."
+
+                "There's still time, maybe tomorrow":
+                    $ increase_stat("remembering")
+                    show mai shocked1 at character_center_zoom_mai with dissolve
+                    mai "Tomorrow... right. Maybe."
+
+    else:
+        if has_flag("eren_search_success"):
+            show eren smile1 at character_center_zoom_eren with dissolve
+            "Eren collapses dramatically against my fence post, grinning like he's won the lottery."
+
+            show eren smile3 at character_center_zoom_eren with dissolve
+            eren "Turns out the little menace was hiding in the bushes the whole damn time!"
+            "He punches my shoulder with affectionate force."
+
+            menu:
+                "Told you he'd be fine":
+                    $ increase_rel("eren", 2)
+                    show eren smile2 at character_center_zoom_eren with dissolve
+                    n "Kids always turn up where you least expect."
+                    show eren smile3 at character_center_zoom_eren with dissolve
+                    eren "Yeah? Well you turned up right when I needed someone."
+
+                "You owe me one":
+                    $ increase_stat("remembering")
+                    show eren unhappy at character_center_zoom_eren with dissolve
+                    n "This better count as a favor."
+                    show eren smile1 at character_center_zoom_eren with dissolve
+                    eren "Hah! You're stuck with me now, buddy."
+
+        else:
+            show eren frustrated_angry at character_center_zoom_eren with dissolve
+            "Eren stares into the dark, phone in hand. Still no messages. No signs."
+            eren "I really thought... I thought we'd be lucky."
+
+            menu:
+                "We’ll try again in the morning":
+                    $ increase_stat("remembering")
+                    show eren confused1 at character_center_zoom_eren with dissolve
+                    eren "Yeah. We have to."
+
+                "I’m staying up with you, just in case":
+                    $ increase_rel("eren")
+                    show eren smile1 at character_center_zoom_eren with dissolve
+                    eren "Thanks, [player_name]. For not giving up."
+
+    hide eren
+    hide mai
+    $ set_flag(f"{other_character}_absent_next_scenes", True)
+    scene black with fade
+    "The night air hums with unspoken words as I turn toward my own doorstep."
+
+    jump scene2e
+
+
+label scene2e:
+    $ reset_stat("ml_skill")
+    $ set_outcome("lesson2e", "unset")
+
+    call update_flowchart_status("scene2e")
+
+    play music "lesson_theme.mp3"
+    scene bg classroom_board_no_desk with fade
+    show hinata neutral_closed at center with dissolve
+
+    $ chosen_character = get_text_var("relationship_key")  # pulled forward from scene2e_transition
+
+    n "The morning sun cuts across the desks. Hinata steps forward again, her IBM badge catching the light."
+
+    show hinata smile_closed
+    hinata "Let’s talk about artificial neural networks — or ANNs — the digital brains behind modern AI."
+    show hinata smile_closed at right with dissolve
+    show slide neuralnet_structure_slide at slide_pos2 with dissolve
+
+    show hinata thinking_closed
+    hinata "They mimic how biological neurons work. Each node receives signals, applies weights, checks if it passes a threshold — then fires or doesn’t."
+
+    if chosen_character == "mai":
+        mc_internal "Like how Mai held onto that sketchbook — she kept processing, evaluating, deciding what to let through."
+    elif chosen_character == "eren":
+        mc_internal "Like Eren scanning every bush until he hit the right signal. Then—activation."
+
+    menu:
+        "What causes a neuron in a neural network to activate?"
+
+        "Its weighted input exceeds a threshold.":
+            $ increase_stat("ml_skill")
+            hinata "Exactly. The neuron only fires if the combined input — after weights — passes a threshold."
+
+        "It gets a signal from any other node.":
+            $ increase_stat("glitches")
+            hinata "Not quite. A neuron doesn’t fire from a single input alone — it sums all weighted inputs and checks if it’s enough."
+
+
+    show hinata neutral_closed
+    hinata "Neural nets have layers: input, hidden, and output. Each layer transforms the signal slightly — learning patterns as it goes."
+
+    show slide sigmoid_operation_slide with dissolve
+
+    hinata "Inside each node, inputs are multiplied by weights, summed up, and passed through something called an activation function."
+
+    hinata "Most often, that’s the sigmoid function: a = 1 / (1 + e^-z). It squashes outputs between 0 and 1."
+
+    show hinata happy_closed
+    hinata "Why? To give the network control — like a neuron whispering instead of shouting."
+
+    if chosen_character == "mai":
+        mc_internal "Like how Mai goes quiet when something matters most — not silent, but focused. Filtered."
+    elif chosen_character == "eren":
+        mc_internal "Like Eren cracking a joke, even when he's stressed — regulating the output. Keeping things stable."
+
+    menu:
+        "What is the purpose of the sigmoid activation function?"
+
+        "To normalize the output between 0 and 1.":
+            $ increase_stat("ml_skill")
+            hinata "Correct. Sigmoid squashes values into a smooth curve between 0 and 1 — useful when treating outputs like probabilities."
+
+        "To make the output zero for wrong predictions.":
+            $ increase_stat("glitches")
+            hinata "That's a common mix-up. Sigmoid doesn’t hit exact zero — it compresses values smoothly. Even 'wrong' outputs get some weight."
+
+
+    show slide cost_function_slide with dissolve
+
+    hinata "Now let’s say the network makes a guess — like predicting someone’s test score."
+
+    hinata "We compare it to the real result. That difference is the error, or loss."
+
+    show hinata thinking_closed
+    hinata "We calculate that using a cost function. One common version: J = ½(y - ŷ)²."
+
+    hinata "The lower the cost, the better our prediction."
+
+    if chosen_character == "mai":
+        mc_internal "She never said thank you. But I could feel it. The cost of saying it outright might’ve been too high."
+    elif chosen_character == "eren":
+        mc_internal "He laughed like nothing happened. But I knew the stress was there — just minimized."
+
+    menu:
+        "What is the cost function trying to minimize?"
+
+        "The squared difference between prediction and actual value.":
+            $ increase_stat("ml_skill")
+            $ increase_stat("remembering")
+            hinata "Yes — that's our error. The cost function tells us how wrong the model’s guess was."
+
+        "The number of activated neurons.":
+            $ increase_stat("glitches")
+            hinata "Ah, no — cost has nothing to do with how many neurons activate. It’s purely about how far off the prediction is."
+
+
+    show slide backpropagation_slide with dissolve
+
+    hinata "So how do we learn from mistakes? With backpropagation."
+
+    show hinata neutral_closed
+    hinata "It’s the backward flow of error — adjusting the network’s weights layer by layer using gradients."
+
+    hinata "This is where machines change. Grow. Get better."
+
+    if chosen_character == "mai":
+        mc_internal "Mai rewrites the same line in her sketchbook over and over. That’s backprop — quiet, determined correction."
+    elif chosen_character == "eren":
+        mc_internal "Eren says he wings it, but I’ve seen how he adjusts. His brain’s been running backprop for years."
+
+    menu:
+        "How does backpropagation work?"
+
+        "It adjusts weights using gradients of the cost function.":
+            $ increase_stat("ml_skill")
+            hinata "Exactly. Gradients help us know which weights caused the error — and how to fix them, step by step."
+
+        "It deletes neurons that made mistakes.":
+            $ increase_stat("glitches")
+            hinata "Nope — neural networks don’t delete parts of themselves. They learn by fine-tuning weights, not pruning structure."
+
+
+    hinata "ANNs aren’t just theories. They power Google search, voice assistants, even self-driving cars."
+
+    hinata "Their strength? They learn from data — and they don’t forget."
+
+    play audio "bell_ring.mp3"
+
+    mc_internal "Funny. After everything last night, this lesson felt... personal."
+
+    scene black with fade
+    pause 2.5
+
+    python:
+        if has_stat_minimum("ml_skill", 3) and has_stat_minimum("remembering", 1):
+            set_outcome("lesson2e", "success")
+        elif has_stat_minimum("ml_skill", 2):
+            set_outcome("lesson2e", "partial")
+        else:
+            set_outcome("lesson2e", "fail")
+
+
+    return

@@ -1,0 +1,221 @@
+label scene2e5:
+
+    $ time_display =  "04:35 PM"
+    call show_time
+
+    scene bg library_day with fade
+
+    n """
+    The library’s quieter than usual.
+
+    No Hayashi today. Just a note on the app:
+    """
+
+    n """
+    “Professor Hayashi is unwell.
+
+    Please review the final sections of Chapter 2 in Library Room 2.
+
+    Next week’s lesson will be essential.”
+    """
+
+    if remembering >= 2.0:
+        mc_internal "Wait… wasn’t this supposed to be taught *in class*? Hayashi skipped this once before."
+    else:
+        mc_internal "Doesn’t feel strange… until I realize I can’t remember the last part of Chapter 2 at all."
+
+    mc_internal """
+    Strange, but... not alarming.
+
+    He warned us last time. Something important is coming.
+    """
+
+    n """
+    A few of us gather — not all, but enough to feel like a class.
+
+    Printouts are waiting on the desk. Marked:
+    “Chapter 2 – Sections 6 & 7. Final Concepts.”
+    """
+
+    "Girl B" "Okay, I’ll start reading. Section six… Backpropagation and Gradient Descent."
+
+    "Girl C" """
+    Backpropagation is the process of calculating the error from a neural network’s output…
+
+    and distributing it backward to update the weights.
+    """
+
+    "Boy A" "So like… the model makes a mistake, and it uses that mistake to figure out what part of it was responsible."
+
+    "Girl B" "Exactly. The error gets traced through the network — each connection, each node, contributes differently."
+
+    mc_internal """
+    The deeper the layer, the less direct influence it has.
+
+    But the feedback still flows. Like guilt passed along a chain.
+    """
+
+    # 🧠 Micro-recap
+    n "Backpropagation lets the network *learn from its own failure* — assigning responsibility backward through the layers."
+
+    "Girl A" "And gradient descent is how it adjusts those weights, right?"
+
+    "Girl C" "Yep. It uses a partial derivative — basically, a small slice of the error — to decide how much each weight should change."
+
+    "Girl C" """
+    Gradient descent is an optimization algorithm.
+
+    It adjusts the network step by step in the direction that reduces the cost function — that is, the error.
+    """
+
+    "Girl C (murmuring, almost to herself)"
+    "Maybe learning isn’t about truth. Just... trying again. Softer."
+
+    menu:
+        "How do you respond?"
+        "It’s painful. But it’s growth.":
+            $ rel_girl_c += 1.0
+            n "Learning hurts. But the cost means something."
+        "Trying over and over doesn’t mean it’s working.":
+            $ rel_girl_c -= 1.0
+            n "Some loops just trap you."
+        "You okay?":
+            $ rel_girl_c += 0.5
+            n "You sound like you're talking about more than models."
+
+
+    "Boy B" "So it’s like hiking downhill blindfolded. You feel around for where the ground slopes down, and you step in that direction."
+
+    "Girl A" "Unless you fall in a valley and get stuck there forever."
+
+    play sound "light_laughter.ogg"
+    pause 1.0
+
+
+    mc_internal """
+    The bottom of the curve is where the system is “best.”
+
+    Where its guesses are closest to the truth.
+
+    But it never knows if it reached the bottom.
+
+    It just… trusts the slope.
+    """
+
+    # 🧠 Micro-recap
+    n "Gradient descent doesn’t find the perfect answer — just *a better one than before*."
+
+    n "Cost = ½ Σ (y - ŷ)²"
+
+    "Girl B" "So this is how the error is measured — sum of the differences between expected and predicted values. Squared, so mistakes don’t cancel each other out."
+
+    mc_internal """
+    This isn’t just math.
+
+    It’s philosophy.
+
+    Failure becomes feedback.
+
+    Error becomes direction.
+    """
+    
+
+    
+    call scene2e5_part2
+    return
+
+
+label scene2e5_part2:
+
+    "Girl A" "Ohhh, I love this one. Here’s the story:"
+
+    """
+    A statistician shoots ten arrows at a target.
+
+    Every arrow misses — but they average out to hit the bullseye.
+
+    He shrugs and says: ‘We got it!’
+    """
+
+    "Boy B" "That’s stats. Precision without meaning."
+
+    "Girl C" "And ML is the opposite. It tolerates being a little wrong, if it means being useful."
+
+    "Girl A" """
+    Machine learning generalizes.
+
+    It doesn’t care if one prediction is off — as long as the overall performance is good.
+    """
+
+    # 🧠 Micro-recap
+    n "Generalization is the goal — not perfection on every point, but consistency across patterns."
+
+    # 🎮 Reflection prompt
+    menu:
+        "What kind of system are you?"
+        
+        "I want to hit the target, no matter what.":
+            $ reflection_score += 0.5
+            mc_internal "Precision matters. I want to get it right."
+        "I’d rather miss a few and still help someone.":
+            $ reflection_score += 1.0
+            mc_internal "Maybe usefulness matters more than perfection."
+        "I’d like to understand why I keep missing.":
+            $ reflection_score += 1.5
+            mc_internal "The system can adjust — but only if it sees the pattern."
+
+    # sdsd
+    call walk_response_event
+
+    scene bg library_sunset with dissolve
+    pause 1.0
+
+    n """
+    The sun shifts. The laughter fades into quiet page-turning.
+
+    Someone adds “Chapter 2 – Done” to the whiteboard.
+    """
+
+    mc_internal """
+    We learned everything.
+
+    But I’m still thinking about Hayashi.
+
+    Why skip this part?
+
+    Why make us finish it?
+    """
+
+    # ✨ Emotional echo: tie reflection to the final line
+    mc_internal """
+    Maybe he wanted to see if we could learn without him.
+
+    Or maybe he wanted to know which of us would keep adjusting… even when the guidance stopped.
+    """
+
+    $ time_display = "05:17 PM"
+    
+    call show_time
+
+    "Girl C" "Whatever’s coming next… He wants us ready."
+    
+    call trust_event
+
+    return
+
+
+label walk_response_event:
+    python:
+        if walk_response == "training" or walk_response == "silent":
+        # "Girl C (quietly, later)"
+            renpy.say(n, "Thanks for not laughing at me that day. When I said maybe we were just data.")
+
+            renpy.say(mc_internal, "She remembered. Even if the system didn’t.")
+            rel_girl_c += 1.0
+
+label trust_event:
+    python:
+        if rel_girl_c >= 3.0:
+            girl_c_trusts_you = True
+        else:
+            girl_c_trusts_you = False

@@ -1,0 +1,67 @@
+label scene3_2_5:
+    scene bg hallway_night with fade
+    pause 1.0
+
+    n """
+    I don’t remember leaving class.
+
+    Not clearly.
+
+    One moment I was watching the slide flicker.
+
+    Next, I was in the hallway.
+
+    Walking.
+
+    Like the day knew how to end without me.
+    """
+
+    mc_internal """
+    It was just me in the room.
+
+    I know it was.
+
+    But Hayashi spoke like nothing was wrong.
+
+    Maybe to the system... nothing was.
+    """
+
+    scene bg train_night with fade
+    play ambient "train_soft_loop.ogg"
+
+    n """
+    The train hums in the dark.
+
+    One blinking light above.
+
+    Rows of empty seats.
+    """
+
+    mc_internal """
+    I didn’t tap my card.
+
+    I didn’t see a conductor.
+
+    Still, the train moved.
+
+    Still, it brought me home.
+    """
+
+    scene bg bedroom_night with fade
+
+    menu:
+        "What will you do before you sleep?"
+        "Check the study group chat":
+            mc_internal "Four names. No new messages. No memory of who’s missing — just a space where someone should be."
+        "Review your notes":
+            mc_internal "Blank page. But your hand aches. You know you wrote something. Didn’t you?"
+        "Just lie down":
+            n "The ceiling is still. Silent. You blink once. Then again. And the next time you open your eyes, it’s morning."
+
+    $ time_display = "09:58 PM"
+    call show_time()
+
+    scene black with fade
+    pause 2.0
+
+    return

@@ -1,0 +1,1476 @@
+﻿label splashscreen:
+    scene black
+    $ renpy.pause(1.0)
+
+    show text "{size=60}Burak Kose Presents{/size}" at truecenter with dissolve
+    $ renpy.pause(2.0)
+    hide text with dissolve
+
+    show queen_mary_logo at truecenter with dissolve
+    play sound "intro.ogg"
+    $ renpy.pause(0.3)
+    hide queen_mary_logo with dissolve
+
+    show ibm_logo at truecenter with dissolve
+    $ renpy.pause(0.2)
+    hide ibm_logo with dissolve
+
+    show text "{size=60}IBM Vision{/size}" at truecenter with dissolve
+    $ renpy.pause(2)
+    hide text with dissolve
+
+    return
+
+
+label main:
+    call update_flowchart_status("main_flow_start") from _call_update_flowchart_status_7
+    call scene2b from _call_scene2b
+
+    $ set_text_var("time_display", "09:27 AM")
+    call show_time from _call_show_time_3 
+    # call scene2c from _call_scene2c
+    call scene2b5_transition from _call_scene2b5_transition
+    call wakeup_intro from _call_wakeup_intro_forest_outcome
+    call journey_to_classroom_forest_outcome from _call_journey_to_classroom_forest_outcome
+    call scene2d from _call_scene2d
+
+    call scene2d_transition from _call_scene2d_transition
+    # first act is done
+
+    call scene2e_transition from _call_scene2e_transition
+    # checkpoint
+    
+    # call scene2e_transition from _call_scene2e
+    # done
+    
+    # $ set_text_var("time_display", "09:00 AM")
+    # call show_time
+    # call scene3_1 from _call_scene3_1
+    call scene3_1_5 from _call_scene3_1_5
+    call scene3_2 from _call_scene3_2
+    # call scene3_2_5 from _call_scene3_2_5
+    call scene3_3 from _call_scene3_3
+    
+# label start:
+#     camera:
+#         perspective True
+#     call update_flowchart_status("start")
+#     scene black with fade
+
+#     $ player_name = renpy.input("{color=#FFFFFF}What's your name?{/color}")
+#     $ player_name = player_name.strip()
+
+#     if player_name == "":
+#         $ player_name = "Burak"
+
+#     call scene1_transition from _call_scene1_transition
+
+#     camera:
+#         perspective True
+
+#     show mai unsatisfied at character_base_pose_left_mai with dissolve
+#     mai "Ughhh, why is it always a little too cold in here?"
+
+#     show eren confused1 at character_base_pose_right_eren with dissolve
+#     hide jennie with dissolve
+#     eren "You sit by the window every day. At this point, it's self-inflicted."
+    
+#     show mai satisfied with dissolve
+#     mai "Hey, this seat and I have a bond. Don't question the tradition."
+
+#     show eren smile1 with dissolve
+#     n """
+#     Their banter flows easily — like music you've heard a hundred times, but never get tired of.
+
+#     It's the kind of familiarity that makes a place feel like home.
+#     """
+#     show mai smile1 with dissolve
+
+#     menu:
+#         "How do you respond?"
+
+#         "Add to the joke — keep the vibe light.":
+#             $ increase_rel("mai", 1)
+#             $ increase_rel("eren", 1)
+#             n "You two should start a show. I'd tune in every episode."
+
+#             show mai smile2 with dissolve
+#             show eren smile2 with dissolve
+            
+#             mai "Season three's our redemption arc."
+#             show mai smile1 with dissolve
+#             eren "I get to write the theme song."
+#             show eren smile1 with dissolve
+
+#         "Smile and listen quietly.":
+#             $ increase_rel("eren", 0.5)
+#             n "*You smile, watching it unfold like a favorite scene.*"
+#             n "No need to speak — being here is enough."
+#             show eren confused1 with dissolve
+#             pause 0.3
+#             show eren unhappy with dissolve
+
+#         "Change the subject gently.":
+#             $ increase_stat("reflection_score", 1)
+#             n "Anyone else feel like this place runs on autopilot sometimes?"
+
+#             show mai unsatisfied with dissolve
+#             mai "...Huh. That's kinda deep for a Monday."
+
+#             show eren shocked1 with dissolve
+#             eren "Classic [player_name], dropping existentialism before class."
+
+#             show eren smile1 with dissolve
+#             show mai smile1 with dissolve
+    
+#     # Cue classroom atmosphere
+#     eren "Hayashi's late today, right?"
+
+#     mai "Probably calibrating his tie again."
+
+#     n """
+#     It's a small thing, but it makes you smile.
+
+#     This is what you came here for — not just the equations, but the people.
+
+#     The patterns in between the formulas.
+#     """
+#     jump main
+# label before_main_menu:
+#     $ register_all_arcs()
+#     return
+
+label start:
+    camera:
+        perspective True
+    
+    # call before_main_menu from _before_main_menu
+    show screen key_listener
+    # show screen choice_impact_feedback(type="EMOTION", direction="↓")
+    # $ renpy.pause 2.0
+    call update_flowchart_status("start") from _call_update_flowchart_status_8
+    scene black with fade
+
+    $ player_name = renpy.input("{color=#FFFFFF}What's your name?{/color}")
+    $ player_name = player_name.strip()
+
+    if player_name == "":
+        $ player_name = "Burak"
+
+    call scene1_transition from _call_scene1_transition
+    
+    camera:
+        perspective True
+    call classroom_beg from _classroom_beg
+    
+    jump main   
+
+label classroom_beg:
+        show i_mai unsatisfied at character_base_pose_left_mai with dissolve
+        mai "Ughhh, why is it always a little too cold in here?"
+
+        show i_eren confused1 at character_base_pose_right_eren with dissolve
+        hide i_jennie with dissolve
+        eren "You sit by the window every day. At this point, it's self-inflicted."
+
+        show i_mai satisfied at character_base_pose_left_mai with dissolve
+        mai "Hey, this seat and I have a bond. Don't question the tradition."
+
+        show i_eren smile1 at character_base_pose_right_eren with dissolve
+        n """
+        Their banter flows easily — like music you've heard a hundred times, but never get tired of.
+
+        It's the kind of familiarity that makes a place feel like home.
+        """
+        show i_mai smile1 at character_base_pose_left_mai with dissolve
+
+        python:
+            start_choices = [
+                {
+                    "prompt": "How do you respond?",
+                    "text": "Add to the joke — keep the vibe light.",
+                    "next_label": "start_choice_joke",
+                    "impact": {
+                        "characters": ["mai", "eren"],
+                        "branches": {
+                            "rel_mai": 1,
+                            "rel_eren": 1
+                        }
+                    }
+                },
+                {
+                    "prompt": "How do you respond?",
+                    "text": "Smile and listen quietly.",
+                    "next_label": "start_choice_silent",
+                    "impact": {
+                        "characters": ["eren"],
+                        "branches": {
+                            "rel_eren": 0.5
+                        }
+                    }
+                },
+                {
+                    "prompt": "How do you respond?",
+                    "text": "Change the subject gently.",
+                    "next_label": "start_choice_reflect",
+                    "impact": {
+                        "branches": {
+                            "stat_reflection_score": 1
+                        }
+                    }
+                },
+            ]
+
+            dynamic_choices = build_reflection_choices(start_choices)
+            return_label = "start_post_choice"
+        jump handle_dynamic_choice
+return
+label start_choice_joke:
+
+    n "You two should start a show. I'd tune in every episode."
+
+    show i_mai smile2 with dissolve
+    show i_eren smile2 with dissolve
+
+    mai "Season three's our redemption arc."
+    show i_mai smile1 with dissolve
+    eren "I get to write the theme song."
+    show i_eren smile1 with dissolve
+    return
+
+label start_choice_silent:
+    n "*You smile, watching it unfold like a favorite scene.*"
+    n "No need to speak — being here is enough."
+
+    show i_eren confused1 with dissolve
+    pause 0.3
+    show i_eren unhappy with dissolve
+    return
+
+label start_choice_reflect:
+    n "Anyone else feel like this place runs on autopilot sometimes?"
+
+    show i_mai unsatisfied with dissolve
+    mai "...Huh. That's kinda deep for a Monday."
+
+    show i_eren shocked1 with dissolve
+    eren "Classic [player_name], dropping existentialism before class."
+
+    show i_eren smile1 with dissolve
+    show i_mai smile1 with dissolve
+    return
+
+label start_post_choice:
+    eren "Hayashi's late today, right?"
+    mai "Probably calibrating his tie again."
+
+    n """
+    It's a small thing, but it makes you smile.
+
+    This is what you came here for — not just the equations, but the people.
+
+    The patterns in between the formulas.
+    """
+    jump main
+
+
+label girlA_choice:
+    python:
+        if has_relationship_minimum("mai", 1):
+            renpy.say(narrator, "Girl A catches your eye. You can tell she notices the shift too, even if she doesn't say it.")
+        elif rel("mai") <= -1:
+            renpy.say(narrator, "Girl A avoids your gaze. Whatever connection you had earlier, it's not there now.")
+
+    return
+    
+label scene1_transition:
+    play music "audio/planet.ogg" fadein(0.2) fadeout 0.5
+    scene bg summer_star with dissolve
+
+    n """
+    Another morning.
+    Sky's clear. The world's slow. Everything feels like it's just… waiting to start.
+    """
+
+    n """
+    Not dramatic. Not cinematic.
+    Just one more quiet loop in the system.
+    """
+
+    $ set_text_var("time_display", "07:01 AM")
+    call show_time()
+
+    play music "daily_routine.mp3" fadeout 1.0 fadein 1.0
+    call wakeup_intro
+    jump journey_to_classroom
+    return
+
+label wakeup_intro:
+    $ reset_stat("physics_skill")  
+    call update_flowchart_status("wakeup_intro") from _call_update_flowchart_status_38
+    scene bg bedroom_night with fade
+    play music "daily_routine.mp3" fadeout 1.0 fadein 1.0
+
+    python:
+        if outcome("forest_path") in ["success", "partial", "fail"] or has_flag("jennie_friend") or has_flag("jennie_friend_declined"):
+            # Unlock the second act/chapter
+            flowchart_manager.unlock_arc("act2")
+            renpy.notify("Act 2 Unlocked!")
+    if has_flag("jennie_friend"):
+        mc_internal """
+        I woke up before the alarm again.
+        But it felt... lighter this time.
+        Like something's changed. Settled.
+        """
+    elif outcome("forest_path") == "fail":
+        mc_internal """
+        I woke up before the alarm again.
+        Not because I wanted to.
+        Just because the weight didn't let me sleep any longer.
+        """
+    else:
+        mc_internal """
+        I woke up before the alarm again.
+        No dream. No noise.
+        Just habit in motion.
+        """
+
+    python:
+        wakeup_choices = [
+            {
+                "prompt": "How do you feel?",
+                "text": "Anxiety. I'm always alert.",
+                "next_label": "wakeup_choice_anxiety",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 1,
+                        "remembering": 0.5
+                    }
+                }
+            },
+            {
+                "prompt": "How do you feel?",
+                "text": "My brain just boots weird.",
+                "next_label": "wakeup_choice_boots",
+                "impact": {
+                    "branches": {
+                        "glitches": 1
+                    }
+                }
+            },
+            {
+                "prompt": "How do you feel?",
+                "text": "It's comforting to beat the clock.",
+                "next_label": "wakeup_choice_comfort",
+                "impact": {
+                    "branches": {
+                        "reflection_score": 0.5
+                    }
+                }
+            },
+        ]
+
+        dynamic_choices = build_reflection_choices(wakeup_choices)
+        return_label = "wakeup_post_choice"
+    jump handle_dynamic_choice
+
+label wakeup_choice_anxiety:
+    mc_internal "Still wired. Like I'm waiting for something to go wrong."
+    return
+
+label wakeup_choice_boots:
+    mc_internal "Feels like my head starts buffering before I even open my eyes."
+    return
+
+label wakeup_choice_comfort:
+    mc_internal "Maybe I just like feeling ahead. Like I've got time under control."
+    return
+
+label wakeup_post_choice:
+    scene bg bedroom_day with dissolve
+    play audio "open_curtains.mp3"
+    play audio "morning_birds.mp3"
+
+    n "Light spills in through the blinds. Not too harsh. Just... enough."
+
+    mc_internal """
+    I check the time again. Just to make sure.
+    Nothing's wrong.
+    But I still feel like I'm bracing.
+    """
+
+    play sound "change_room.wav"
+    scene bg living_room_day with fade
+    n "Bag. Phone. Check. Recheck."
+
+    play sound "change_room.wav"
+    scene bg home_day with fade
+    play audio "morning_bird_traffic.mp3"
+
+    mc_internal """
+    The neighborhood's already awake.
+    But in that calm way — like it's not in a rush.
+    Maybe I should learn from that.
+    """
+
+    $ set_text_var("time_display", "07:30 AM")
+    call show_time()
+    return
+
+    
+label journey_to_classroom:
+    scene bg schoolway_day_1 with fade
+    play ambient "city_morning_ambience.ogg"
+    call update_flowchart_status("journey_to_classroom") from _call_update_flowchart_status_11  # PRESERVED
+
+    mc_internal """
+    The walk to school feels automatic.
+    Same turns. Same sidewalks.
+    Some mornings feel like they've already happened.
+    """
+
+    scene bg schoolgate_day with fade
+    n """
+    The school building stands quiet.
+    Sharp lines. White walls. A little too symmetrical.
+    It's trying to look clean — professional. But that doesn't make it less human.
+    """
+
+    mc_internal """
+    This place isn't what I pictured when I read 'AI Academy.'
+    No chrome. No holograms. Just... regular hallways and overworked projectors.
+    """
+
+    scene bg courtyard_day with fade
+    play sound "courtyard_ambience.wav"
+    mc_internal """
+    The courtyard's still my favorite part.
+    Everyone passes through it, but no one really stops.
+    It's like a checkpoint — between the outside world and whatever this place wants to be.
+    """
+
+    n "You adjust your bag, cutting across the stone path toward the stairs — when you nearly collide with someone."
+    play sound "soft_bump.ogg"
+    play audio "punch.wav"
+    "???" "Whoa—!" with vpunch
+    play music "School_Casual.ogg" fadein (2.0)
+
+    show i_jennie sad_shocked at character_base_pose with dissolve
+    jennie "You always walk like you've already solved the day."
+    n "Sorry. Didn't mean to almost knock you out."
+    show i_jennie smile1 with dissolve
+    jennie "It's okay. Would've made a good excuse to skip class."
+    n "She smiles — soft, familiar. It's not teasing, just... comfortable."
+    show i_jennie sad_shocked at character_base_pose with dissolve
+
+    # --- DYNAMIC CHOICE HANDLER (preserves all original effects) ---
+    python:
+        courtyard_choices = [
+            {
+                "prompt": "What do you do?",
+                "text": "Let's skip and go somewhere instead.",
+                "next_label": "courtyard_skip_option",
+                "impact": {
+                    "relationship": ("jennie", 1),
+                    "flags": ["walked_with_girl_c"],
+                    "flowchart_updates": [
+                        ("journey_to_classroom", "_call_update_flowchart_status_12"),
+                        ("jennie_enters_with_you", "_call_update_flowchart_status_13")
+                    ]
+                }
+            },
+            {
+                "prompt": "What do you do?",
+                "text": "We should probably go in.",
+                "next_label": "courtyard_enter_option",
+                "impact": {
+                    "relationship": ("jennie", 0.5),
+                    "flags": ["walked_with_girl_c"],
+                    "flowchart_updates": [
+                        ("journey_to_classroom", "_call_update_flowchart_status_12"),
+                        ("jennie_enters_with_you", "_call_update_flowchart_status_13")
+                    ]
+                }
+            },
+            {
+                "prompt": "What do you do?",
+                "text": "You go ahead — I'll catch up.",
+                "next_label": "courtyard_separate_option",
+                "impact": {
+                    "relationship": ("jennie", -0.5),
+                    "flags": [],
+                    "flowchart_updates": [
+                        ("journey_to_classroom", "_call_update_flowchart_status_12"),
+                        ("you_enter_alone", "_call_update_flowchart_status_14")
+                    ]
+                }
+            }
+        ]
+        dynamic_choices = build_reflection_choices(courtyard_choices)
+        return_label = "post_courtyard_interaction"
+        
+    jump handle_dynamic_choice
+
+label courtyard_skip_option:
+    call update_flowchart_status("courtyard_enter_option")
+    $ increase_rel("jennie", 1)  
+    show i_jennie smile1 with dissolve
+    n "We could ditch. Coffee and existential dread instead of regression curves?"
+    jennie "Tempting... but Hayashi would actually notice, wouldn't he?"
+    $ set_flag("walked_with_girl_c", True) 
+    n "You both laugh — not because it's funny, but because you needed a moment like this."
+    jump post_courtyard_interaction
+
+label courtyard_enter_option:
+    call update_flowchart_status("courtyard_enter_option")
+    $ increase_rel("jennie", 0.5)  
+    show i_jennie smile2 with dissolve
+    n "Come on. If we're late, I'll have to explain deterministic systems myself."
+    jennie "Yikes. No offense, but your whiteboard handwriting sucks."
+    $ set_flag("walked_with_girl_c", True)
+    n "That's fair."
+    jump post_courtyard_interaction
+
+label courtyard_separate_option:
+    call update_flowchart_status("courtyard_separate_option")
+    $ increase_rel("jennie", -0.5)  
+    show i_jennie unhappy with dissolve
+    n "I've got something to check real quick."
+    jennie "Alright. See you inside?"
+    $ set_flag("walked_with_girl_c", False) 
+    n "Yeah. Definitely."
+    jump post_courtyard_interaction
+
+label post_courtyard_interaction:
+    n "She walks off toward the entrance. For a second, you watch her go — then keep walking."
+    hide i_jennie with dissolve
+    pause 1  
+
+    play audio "change_room.wav"
+    scene bg 1_floor_stair_day2 with fade
+    n "I climb the stairs to the first floor."
+
+    scene bg 2_floor_stair_day with dissolve
+    n "Then the second. Each one feels the same. But somehow heavier."
+    mc_internal """
+    Maybe it's the air.
+    Or maybe just what we're all carrying in.
+    """
+
+    scene bg hallway_full_colored with fade
+    play audio "hallway_full_sound.mp3"
+    n """
+    Lockers click shut. Someone's laughing down the hall.
+    Normal sounds. It's almost comforting.
+    """
+    play audio "change_room.wav"
+    scene bg classroom_left_day_full_colored with fade
+    call update_flowchart_status("journey_to_classroom") from _call_update_flowchart_status_12  # PRESERVED
+
+    python:
+        if has_flag("walked_with_girl_c"):
+            increase_rel("jennie", 0.5)
+            renpy.call("jennie_enters_with_you")
+            renpy.call("jennie_enters_with_you_node")
+        else:
+            renpy.call("you_enter_alone")
+            renpy.call("you_enter_alone_node")
+    return
+
+label jennie_enters_with_you_node:
+    return
+
+label you_enter_alone_node:
+    return
+
+label journey_to_classroom_forest_outcome:
+    scene bg schoolway_day_1 with fade
+    play ambient "city_morning_ambience.ogg"
+
+    if has_flag("jennie_friend"):
+        show mai smile3 at character_base_pose_left_mai with dissolve
+        show jennie smile1 at character_base_pose with dissolve
+
+        n "I catch up with Mai and Jennie near the school turn."
+
+        mai "Took you long enough."
+
+        jennie "We were betting on whether you'd run or ghost."
+
+        mc_internal "They're both smiling. No tension. Just ease."
+
+        menu:
+            "What do you say?"
+
+            "Sorry — I move at existential dread speed.":
+                $ increase_rel("jennie", 0.5)
+                jennie "Fair. We'll try to sync your dread clock tomorrow."
+
+            "Was making sure the simulation was still stable.":
+                $ increase_stat("reflection_score", 0.5)
+                mai "Let us know if you find any cracks."
+
+            "You guys waited?":
+                $ increase_rel("jennie", 1)
+                $ increase_rel("mai", 1)
+                jennie "Maybe. Or maybe we like good company."
+
+        $ set_flag("walked_with_girl_c", True)
+
+    else:
+        show mai smile2 at character_base_pose_left_mai with dissolve
+        n "I spot Mai near the courtyard."
+
+        mai "Yo. You good? You looked fried yesterday."
+
+        mc_internal "I think she means the quiz ambush. Or maybe just... everything."
+
+        menu:
+            "How do you respond?"
+
+            "I'm fine. Just thinking.":
+                $ increase_stat("reflection_score", 1)
+                mai "Thinking's allowed. Just don't get lost in it."
+
+            "Jennie's intense, huh.":
+                $ increase_rel("mai", 0.5)
+                mai "You're telling me. She acts like she's testing our souls, not our brains."
+
+            "Thanks for backing me up.":
+                $ increase_rel("mai", 1)
+                mai "Anytime. You looked like you needed it."
+
+        $ set_flag("walked_with_girl_c", False)
+
+    hide mai
+    hide jennie
+    scene bg schoolgate_day with fade
+
+    mc_internal """
+    The building's waiting — same as always.
+
+    But the way I walk through the gate... maybe that changed.
+    """
+
+    scene bg 1_floor_stair_day2 with fade
+    pause 0.2
+
+    scene bg 2_floor_stair_day with dissolve
+    pause 0.2
+
+    scene bg hallway_full_colored with fade
+    play audio "hallway_full_sound.mp3"
+
+    n "As usual.."
+    return
+    
+label jennie_enters_with_you:
+    n "Jennie walks in beside me."
+    show i_jennie smile1 at character_base_pose with dissolve
+    mc_internal "She doesn't say anything — but I can tell she's glad we made it together."
+    return
+    
+label you_enter_alone:
+    n "I step into the classroom alone."
+    mc_internal "Same room. Same faces. Or... most of them."
+    show i_jennie smile1 at character_base_pose with dissolve
+
+    # --- DYNAMIC SEATING CHOICE ---
+    python:
+        if not has_flag("walked_with_girl_c"):
+            seating_choices = [
+                {
+                    "prompt": "Jennie is here, what do you say?",
+                    "text": "Yeah. Want to sit nearby?",
+                    "next_label": "jennie_nearby_option",
+                    "impact": {
+                        "flags": ["asked_to_sit", "jennie_sitting_nearby"],
+                        "relationship": ("jennie", 0.5 if has_flag("walked_with_girl_c") else -0.5),
+                        "flowchart_updates": [("jennie_sitting_nearby", "_call_update_flowchart_status_15")],
+                        "dialogue": {
+                            "jennie": "Sure. Just don't snore during the lecture, okay?" if has_flag("walked_with_girl_c") 
+                                    else "Ah... actually, I told someone else I'd sit with them today.",
+                            "mc": "She smiles a little. It's easy around her." if has_flag("walked_with_girl_c")
+                                    else "That stung a bit. Maybe next time."
+                        }
+                    }
+                },
+                {
+                    "prompt": "Jennie is here, what do you say?",
+                    "text": "Just saying hi.",
+                    "next_label": "jennie_away_option",
+                    "impact": {
+                        "flags": [],
+                        "relationship": ("jennie", 0),
+                        "flowchart_updates": [("jennie_sitting_away", "_call_update_flowchart_status_16")],
+                        "dialogue": {
+                            "jennie": "No worries. See you after class.",
+                            "mc": ""
+                        }
+                    }
+                }
+            ]
+            return_label = "after_jennie_choice"
+            dynamic_choices = build_reflection_choices(seating_choices)
+            renpy.jump("handle_dynamic_choice")
+        else:
+            renpy.call("after_jennie_choice")  # PRESERVED ORIGINAL CALL
+
+    # --- ORIGINAL OPTION PATHS ---
+    label jennie_nearby_option:
+        show i_jennie sad_shocked at character_base_pose with dissolve
+        $ set_flag("asked_to_sit", True)  # PRESERVED
+        
+        if has_flag("walked_with_girl_c"):
+            $ increase_rel("jennie", 0.5)  # PRESERVED
+            $ set_flag("jennie_sitting_nearby", True)  # PRESERVED
+            jennie "Sure. Just don't snore during the lecture, okay?"
+            mc_internal "She smiles a little. It's easy around her."
+        else:
+            $ increase_rel("jennie", -0.5)  # PRESERVED
+            $ set_flag("jennie_sitting_nearby", False)  # PRESERVED
+            jennie "Ah... actually, I told someone else I'd sit with them today."
+            mc_internal "That stung a bit. Maybe next time."
+        
+        hide i_jennie with dissolve
+        jump after_jennie_choice
+
+    label jennie_away_option:
+        show i_jennie sad_shocked at character_base_pose with dissolve
+        $ set_flag("asked_to_sit", False)  # PRESERVED
+        n "Just wanted to say hi. I'll find a seat."
+        jennie "No worries. See you after class."
+        hide i_jennie with dissolve
+        $ set_flag("jennie_sitting_nearby", False)  # PRESERVED
+        jump after_jennie_choice
+
+label after_jennie_choice:
+    mc_internal """
+    I take my seat near the middle.
+    Close enough to hear, far enough to breathe.
+    That's my balance.
+    """
+    return
+
+label scene2b:
+    call update_flowchart_status("scene2b") from _update_flowchart_status_25
+    play music "audio/lesson_theme_hinata.ogg" fadein 1
+
+    $ reset_stat("ml_understanding")
+    $ reset_stat("reflection_score")
+
+    scene bg classroom_board_no_desk with fade
+    show hayashi happy_closed at center with dissolve
+
+    n """
+    The classroom hums with the quiet energy of first lectures.
+
+    Hayashi stands motionless at the podium, fingers resting on an old mechanical clicker.
+
+    His gaze sweeps across the room - not checking attendance, but measuring readiness.
+    """
+
+    mc_internal """
+    That's his tell.
+
+    When he's about to dismantle everything we think we know.
+    """
+
+    hayashi "Open your minds wider than your notebooks today."
+    hayashi "We begin with a simple replacement: Forget 'programming'. Think 'teaching'."
+
+    n "The first definition slide appears with a sharp snap."
+
+    show hayashi neutral_opened at right with dissolve
+    show slide ml_definition_slide at slide_pos with dissolve
+    hayashi "Machine learning: Systems that learn from data rather than explicit programming."
+
+    mai shocked1 "Wait... so we're not writing code?"
+
+    eren shocked1 "We are, but differently. Right, Professor?"
+
+    hayashi "Correct, Eren. We write frameworks for learning, not fixed instructions."
+    hayashi "Consider this - if traditional programming is giving a cookbook, machine learning is teaching taste buds."
+
+    jennie smile2 "But how does it actually learn?"
+
+    hayashi "Three steps:"
+    hayashi "1. Ingest training data"
+    hayashi "2. Identify patterns"
+    hayashi "3. Produce models"
+
+    mai smile2 "Like how we learn from homework mistakes!"
+
+    show hayashi smile_opened at right with dissolve
+    hayashi "*small smile* An apt comparison, Mai. Now imagine doing that with ten million homework assignments simultaneously."
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Imagine doing that with ten million homework assignments simultaneously.",
+                "text": "That sounds incredibly powerful",
+                "next_label": "ml_scale_powerful",
+                "impact": {"stats": {"ml_understanding": 1}}
+            },
+            {
+                "prompt": "Imagine doing that with ten million homework assignments simultaneously.",
+                "text": "Wouldn't that require massive computers?",
+                "next_label": "ml_scale_computers",
+                "impact": {"stats": {"ml_understanding": 0.5}}
+            },
+            {
+                "prompt": "Imagine doing that with ten million homework assignments simultaneously.",
+                "text": "I don't trust something that learns that fast",
+                "next_label": "ml_scale_distrust",
+                "impact": {"stats": {"reflection_score": 1, "glitches": 0.5}}
+            }
+        ])
+        return_label = "ml_scale_continue"
+    jump handle_dynamic_choice
+
+label ml_scale_powerful:
+    mc_internal "The potential applications seem endless..."
+    jump ml_scale_continue
+
+label ml_scale_computers:
+    eren smile2 "That's why we use cloud computing!"
+    jump ml_scale_continue
+
+label ml_scale_distrust:
+    jennie smile2 "That's why we have ethics modules later."
+    jump ml_scale_continue
+
+label ml_scale_continue:
+    hide slide with dissolve
+    show slide ml_applications_slide at slide_pos with dissolve
+
+    hayashi "Where ML shines - and where it stumbles."
+
+    n "He divides the board with a vertical line."
+
+    hayashi "Left: Ideal applications. Right: Problematic fits."
+    hayashi "Mars rover soil analysis? Left column."
+    hayashi "Sentencing guidelines? Right column."
+
+    eren confused1 "Because of bias in training data?"
+
+    hayashi "Exactly. Now consider voice sentiment analysis - left or right?"
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Is voice sentiment analysis a good use?",
+                "text": "Left - too much data for humans",
+                "next_label": "ml_sentiment_left",
+                "impact": {"stats": {"ml_understanding": 1}}
+            },
+            {
+                "prompt": "Is voice sentiment analysis a good use?",
+                "text": "Right - emotions are too complex",
+                "next_label": "ml_sentiment_right",
+                "impact": {"stats": {"reflection_score": 1}}
+            },
+            {
+                "prompt": "Is voice sentiment analysis a good use?",
+                "text": "Depends on the implementation",
+                "next_label": "ml_sentiment_itdepends",
+                "impact": {"stats": {"ml_understanding": 1.5}}
+            }
+        ])
+        return_label = "ml_sentiment_continue"
+    jump handle_dynamic_choice
+
+label ml_sentiment_left:
+    mai smile2 "A million customer calls? No human could..."
+    jump ml_sentiment_continue
+
+label ml_sentiment_right:
+    jennie smile1 "Can algorithms really understand sarcasm?"
+    jump ml_sentiment_continue
+
+label ml_sentiment_itdepends:
+    hayashi "The most correct answer. Context determines suitability."
+    jump ml_sentiment_continue
+
+label ml_sentiment_continue:
+    hide slide with dissolve
+    show slide ml_approaches_slide at slide_pos with dissolve
+
+    hayashi "Now, the three tribes of ML:"
+
+    n "He draws three columns on the board."
+
+    hayashi "Supervised: Precise but needs labels. Like training wheels."
+    hayashi "Unsupervised: Finds hidden patterns. Needs big data."
+    hayashi "Reinforcement: Learns by doing. Trial and error."
+
+    mai smile1 "Like training a dog with treats!"
+
+    eren confused1 "Which is most used in industry?"
+
+    hayashi "Currently? Supervised. But reinforcement learning is growing rapidly."
+
+    jennie smile2 "What about... hybrid approaches?"
+
+    hayashi "Excellent question. Semi-supervised learning exists exactly..."
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Do you have any questions?",
+                "text": "Won't unsupervised learning make mistakes?",
+                "next_label": "ml_unsupervised_mistakes",
+                "impact": {"stats": {"reflection_score": 1}}
+            },
+            {
+                "prompt": "Do you have any questions?",
+
+                "text": "How do we evaluate what we don't understand?",
+                "next_label": "ml_validation_question",
+                "impact": {"stats": {"ml_understanding": 1}}
+            },
+            {
+                "prompt": "Do you have any questions?",
+
+
+                "text": "Couldn't this lead to AI deception?",
+                "next_label": "ml_ai_deception",
+                "impact": {"stats": {"glitches": 1}}
+            },
+            {
+                "prompt": "Do you have any questions?",
+
+                "text": "Stay quiet and listen",
+                "next_label": "ml_stay_quiet",
+                "impact": {"branches": {"rel_hayashi": -0.5}}
+            }
+        ])
+        return_label = "ml_approaches_continue"
+    jump handle_dynamic_choice
+
+label ml_unsupervised_mistakes:
+    hayashi "Certainly. But sometimes discovering unexpected patterns is worth the noise."
+    jump ml_approaches_continue
+
+label ml_validation_question:
+    hayashi "Through rigorous validation against held-out test data."
+    jump ml_approaches_continue
+
+label ml_ai_deception:
+    show hayashi serious_closed
+    hayashi "...That's an active research concern, actually."
+    jump ml_approaches_continue
+
+label ml_stay_quiet:
+    mc_internal "I'll save my questions for after class."
+    jump ml_approaches_continue
+
+label ml_approaches_continue:
+    hide slide with dissolve
+
+    show hayashi happy_closed at center with dissolve
+    hayashi "In our coming sessions, we'll explore:"
+    n "He counts on his fingers:"
+    hayashi "1. How neural networks build on simple regression"
+    hayashi "2. Decision trees through practical examples"
+    hayashi "3. Full ML development frameworks"
+
+    eren smile2 "When do we get to train actual models?"
+
+    hayashi "Patience. Even machine learning requires..."
+    show hayashi serious_closed at center with dissolve
+    hayashi "Fundemental First"
+
+    show hayashi smile_closed at center with dissolve
+    hayashi "For next time: Read chapter 1 of 'Prediction Machines'. And observe - where in your daily life could better predictions help?"
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Last chance for questions..",
+                "text": "How much math do we really need?",
+                "next_label": "ml_math_question",
+                "impact": {"stats": {"ml_understanding": 0.5}}
+            },
+            {
+                "prompt": "Last chance for questions..",
+                "text": "What's the most surprising ML application?",
+                "next_label": "ml_app_surprise",
+                "impact": {"stats": {"reflection_score": 1}}
+            },
+            {
+                "prompt": "Last chance for questions..",
+                "text": "Nothing yet - need to process this",
+                "next_label": "ml_process_mode",
+                "impact": {"branches": {"rel_hayashi": 0.5}}
+            }
+        ])
+        return_label = "ml_close"
+    jump handle_dynamic_choice
+
+label ml_math_question:
+    hayashi "Enough to understand what's happening under the hood. We'll build gradually."
+    jump ml_close
+
+label ml_app_surprise:
+    hayashi "Predicting protein folding. It's revolutionizing biology."
+    jump ml_close
+
+label ml_process_mode:
+    hayashi "Wise. Good questions often come after reflection."
+    jump ml_close
+
+label ml_close:
+    play audio "bell_ring.mp3"
+    n "The bell cuts through the murmurs of discussion."
+
+    show hayashi neutral_closed at center with dissolve
+    hayashi "Remember: We're not just teaching machines - we're learning how to learn."
+
+    scene black with fade
+
+    python:
+        if has_stat_minimum("ml_understanding", 3):
+            set_outcome("lesson_b", "excellent")
+        elif has_stat_minimum("ml_understanding", 2):
+            set_outcome("lesson_b", "good")
+        else:
+            set_outcome("lesson_b", "partial")
+    return
+label scene2b5_transition:
+
+    call update_flowchart_status("scene2b5_transition") from _call_update_flowchart_status_18
+    play music "classroom_theme.mp3" fadeout 1.0
+    $ set_text_var("time_display", "09:27 AM")
+    call show_time() from _call_show_time_6
+
+    scene bg classroom_day_left with fade
+    hide hayashi
+
+    n """
+    Class ends the way it always does — softly.
+
+    Chairs scrape. Notebooks close.
+    """
+
+    mc_internal """
+    Hayashi doesn't give goodbyes.
+
+    Just lets the room wind down like a watch reaching the end of its tick.
+    """
+
+    show mai smile1 at character_base_pose_left_mai with dissolve
+    mai "Hey, feel like walking for a bit? I'm not ready to go home just yet."
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Walk with Mai?",
+                "text": "Yeah. Let's go.",
+                "next_label": "walk_with_mai",
+                "impact": {
+                    "flags": ["walked_with_girl_a"],
+                    "branches": {"rel_mai": 1}
+                }
+            },
+            {
+                "prompt":"Walk with Mai?",
+                "text": "Nah. I need some space.",
+                "next_label": "walk_alone_after_class",
+                "impact": {
+                    "branches": {"rel_mai": -0.5}
+                }
+            }
+        ])
+        return_label = "scene2b5_return"
+
+    jump handle_dynamic_choice
+
+label scene2b5_return:
+    return
+            
+label walk_with_mai:
+
+    call update_flowchart_status("mai_walk_choice") from _call_update_flowchart_status_20
+    scene bg courtyard_ambience with fade
+    play music "daily_routine.mp3" fadeout 1.0
+
+    show mai smile1 at character_base_pose_left_mai with dissolve
+    mai "You ever think this school feels too... clean?"
+
+    n "Like it's been rendered just for us?"
+
+    mai "Exactly. Sometimes I feel like I'm the NPC."
+
+    mc_internal """
+    The way she says it makes me laugh.
+
+    But also — I get it.
+    """
+
+    scene bg schoolway_day_2 with fade
+
+    mc_internal """
+    We walk.
+
+    Not fast. Not slow.
+
+    Like gravity hasn't made up its mind today.
+    """
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "What do you want to do?",
+                "text": "Let's detour through the forest path.",
+                "next_label": "forest_path_cutscene",
+                "impact": {
+                    "flags": ["forest_flag"],
+                    "stats": {
+                        "remembering": 1,
+                        "glitches": 1
+                    }
+                }
+            },
+            {
+                "prompt": "What do you want to do?",
+                "text": "Let's just take the usual street route.",
+                "next_label": "after_school_walk",
+                "impact": {
+                    "stats": {
+                        "reflection_score": 0.5
+                    }
+                }
+            }
+        ])
+        return_label = "walk_with_mai_return"
+
+    jump handle_dynamic_choice
+
+
+label walk_with_mai_return:
+    return
+
+label walk_alone_after_class:
+    call update_flowchart_status("walk_alone") from _call_update_flowchart_status_21
+    scene bg schoolway_day_2 with fade
+    play music "daily_routine.mp3" fadeout 1.0
+
+    mc_internal """
+    I head out alone.
+
+    But my thoughts are still with the board.
+
+    F = ma.
+    """
+
+    jump after_school_walk
+label after_school_walk:
+
+    scene bg train_day2 with dissolve
+    play ambient "train_rumble_loop.ogg"
+
+    mc_internal """
+    The train hums like always.
+
+    Predictable.
+
+    But inside, I feel scattered. Like I'm still catching up.
+    """
+
+    scene bg shopping_street_day with dissolve
+    stop ambient fadeout 1.0
+
+    n "People pass by. Everyone in motion. Everyone with force behind them."
+
+    scene bg station_evening with dissolve
+    $ time_display = "04:23 PM"
+    call show_time() from _call_show_time_7
+
+    mc_internal """
+    Hayashi said movement creates force.
+
+    Maybe it's not about how much weight we carry.
+
+    Maybe it's about choosing to move at all.
+    """
+
+    scene bg train_evening with fade
+    play ambient "train_soft_loop.ogg"
+
+    scene bg school_home_2_sunset with dissolve
+    stop ambient fadeout 1.0
+
+    scene bg home_night with fade
+
+    mc_internal """
+    Another day complete.
+
+    Another equation I won't forget.
+    """
+
+    scene black with fade
+    pause 2.5
+
+    return
+label forest_path_cutscene:
+
+    call update_flowchart_status("forest_path") from _call_update_flowchart_status_22
+    scene bg wood_sunset with fade
+    play ambient "forest_breeze.ogg"
+    $ time_display = "06:53 PM"
+    call show_time() from _call_show_time_8
+
+    python:
+        reset_stat("physics_skill")
+        set_outcome("forest_path", "none")
+        set_flag("jennie_friend", False)
+        set_flag("jennie_friend_declined", False)
+
+    play audio "audio/forest_walk.mp3" volume 0.5 fadeout 0.5
+    mc_internal """
+    The forest path cuts quietly through the trees.
+
+    Off the usual route. Quieter. Like it doesn't want to be remembered.
+    """
+    stop audio
+    play audio "audio/riviere_sound.ogg" volume 0.2 fadeout 1.0
+    scene bg river_1_sunset with dissolve
+    n "You walk ahead — until a familiar voice stops you cold."
+
+    show i_jennie shocked2 at character_base_pose with dissolve
+    n "Jennie is already standing there."
+    play music "audio/confrontation.ogg" fadein 1.0
+    mc_internal "Wait... how did she get here first?"
+    if has_flag("asked_to_sit"):
+        show i_jennie sad_shocked
+        jennie "You said you wanted to sit next to me, then vanish after class?"
+        n "I wasn't avoiding you."
+        jennie "You better not be. I remembered something... and I want answers."
+        show i_jennie unhappy
+    else:
+        show i_jennie angry
+        jennie "Wow. You didn't even ask to sit, and now you're following me into the woods?"
+        n "That's not—"
+        jennie "Save it. Let's see if you even paid attention."
+
+    show i_mai smile2 at character_base_pose_left_mai with dissolve
+    mai "This gonna be a quiz or a fight?"
+
+    jennie "Depends on how he does."
+    hide i_mai with dissolve
+    show i_jennie at character_center_zoom_mai with dissolve
+
+    jennie "Hayashi said machine learning thrives in three kinds of conditions. What were they?"
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Hayashi said machine learning thrives in three kinds of conditions. What were they?",
+                "text": "When humans can't help, there's too much data, or the situation keeps changing.",
+                "next_label": "forest_path_question_2",
+                "impact": {
+                    "stats": {"physics_skill": 1, "remembering": 1},
+                    "branches": {"rel_jennie": 1}
+                }
+            },
+            {
+                "prompt": "Hayashi said machine learning thrives in three kinds of conditions. What were they?",
+                "text": "When rules are unclear, people panic, or decisions are emotional.",
+                "next_label": "forest_path_question_2",
+                "impact": {
+                    "stats": {"glitches": 1},
+                    "branches": {"rel_jennie": -1}
+                }
+            },
+            {
+                "prompt": "Hayashi said machine learning thrives in three kinds of conditions. What were they?",
+                "text": "When it's about dreams, memories, or thoughts.",
+                "next_label": "forest_path_question_2",
+                "impact": {
+                    "stats": {"glitches": 1, "reflection_score": 0.5}
+                }
+            }
+        ])
+        return_label = "forest_path_question_2"
+    jump handle_dynamic_choice
+
+label forest_path_question_2:
+
+    jennie "Fine. Imagine six playlists, labeled by mood — happy, sad, heartbreak, etc. What kind of learning is this?"
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Imagine six playlists, labeled by mood — happy, sad, heartbreak, etc. What kind of learning is this?",
+                "text": "Supervised learning.",
+                "next_label": "forest_path_question_3",
+                "impact": {
+                    "stats": {"physics_skill": 1},
+                    "branches": {"rel_jennie": 0.5}
+                }
+            },
+            {
+                "prompt": "Imagine six playlists, labeled by mood — happy, sad, heartbreak, etc. What kind of learning is this?",
+                "text": "Unsupervised learning.",
+                "next_label": "forest_path_question_3",
+                "impact": {
+                    "stats": {"glitches": 1},
+                    "branches": {"rel_jennie": -0.5}
+                }
+            }
+        ])
+        return_label = "forest_path_question_3"
+    jump handle_dynamic_choice
+
+label forest_path_question_3:
+
+    jennie "Now a thousand tracks, no labels. You want it to group them by similarity. Go."
+
+    python:
+        dynamic_choices = build_reflection_choices([
+            {
+                "prompt": "Now a thousand tracks, no labels. You want it to group them by similarity. Go.",
+                "text": "Unsupervised learning.",
+                "next_label": "forest_path_quiz_outro",
+                "impact": {
+                    "stats": {"physics_skill": 1, "remembering": 1},
+                    "outcomes": {"forest_path": "success"}
+                }
+            },
+            {
+                "prompt": "Now a thousand tracks, no labels. You want it to group them by similarity. Go.",
+                "text": "Supervised learning.",
+                "next_label": "forest_path_quiz_outro",
+                "impact": {
+                    "stats": {"glitches": 1},
+                    "outcomes": {"forest_path": "fail"}
+                }
+            }
+        ])
+        return_label = "forest_path_quiz_outro"
+    jump handle_dynamic_choice
+
+label forest_path_quiz_outro:
+
+    python:
+        if outcome("forest_path") == "none":
+            ps = stat("physics_skill")
+            if ps >= 2:
+                set_outcome("forest_path", "success")
+            elif ps == 1:
+                set_outcome("forest_path", "partial")
+            else:
+                set_outcome("forest_path", "fail")
+
+    if outcome("forest_path") == "success":
+        call update_flowchart_status("forest_success")
+        show i_jennie smile1 at character_center_zoom_mai with dissolve
+        jennie "Alright. You passed."
+        jennie "I'll be honest. This wasn't just about the lesson."
+        jennie "I wanted to see if I could actually trust you."
+
+        show i_jennie smile2 at character_center_zoom_mai with dissolve
+        jennie "I guess... I was hoping you'd be my friend. This was my way of checking."
+        $ set_flag("jennie_friend_offer", True)
+
+        python:
+            dynamic_choices = build_reflection_choices([
+                {
+                    "prompt": "Do you want to be friends?",
+                    "text": "Yeah. I'd like that.",
+                    "impact": {"flags": ["jennie_friend"]},
+                    "next_label": "forest_path_friend_accept"
+                },
+                {
+                    "prompt": "Do you want to be friends?",
+                    "text": "I'm not sure. Not yet.",
+                    "impact": {"flags": ["jennie_friend_declined"]},
+                    "next_label": "forest_path_friend_decline"
+                }
+            ])
+            return_label = "forest_path_friend_outro"
+        jump handle_dynamic_choice
+
+    elif outcome("forest_path") == "partial":
+        call update_flowchart_status("forest_partial")
+        show i_jennie sad_shocked at character_center_zoom_mai with dissolve
+        jennie "You got some of it. Better than nothing."
+        jennie "I still don't know where we stand. But… maybe next time, show up sooner."
+        show i_jennie sad_shocked at right with dissolve
+        show i_mai smile1 at character_base_pose_left_mai with dissolve
+        mai "That's more generous than I expected from her."
+
+    elif outcome("forest_path") == "fail":
+        call update_flowchart_status("forest_fail")
+        show i_jennie angry at character_center_zoom_mai with dissolve
+        jennie "You weren't listening. Again."
+        jennie "You wanna be taken seriously, act like it."
+        show i_jennie angry at character_base_pose with dissolve
+        show i_mai angry2 at character_base_pose_left_mai with dissolve
+        mai "That's enough, Jennie. He tried."
+        mc_internal "The silence that follows hurts more than I expected."
+
+    jump forest_path_conclude
+
+label forest_path_friend_accept:
+    call update_flowchart_status("jennie_friend_accept") from _call_update_flowchart_status_37
+    show i_jennie smile2 at character_center_zoom_mai with dissolve
+    jennie "Cool. Just don't expect me to go easy on you."
+    mc_internal "That... felt like a win."
+    show i_jennie smile2 at character_base_pose with dissolve
+    show i_mai smile3 at character_base_pose_left_mai with dissolve
+    mai "Finally. Took you two long enough."
+    jump forest_path_friend_outro
+
+label forest_path_friend_decline:
+    call update_flowchart_status("jennie_friend_decline") from _call_update_flowchart_status_24
+    show i_jennie sad_shocked at character_center_zoom_mai with dissolve
+    jennie "Fair. I was kinda pushy."
+    jennie "I'll back off."
+    show i_jennie sad_shocked at character_base_pose with dissolve
+    show i_mai unsatisfied at character_base_pose_left_mai with dissolve
+    mai "Honestly? You could've just said yes."
+    jump forest_path_friend_outro
+
+label forest_path_friend_outro:
+    jump forest_path_conclude
+
+label forest_path_conclude:
+    play music "audio/school_casual.ogg"
+    
+    hide i_jennie with dissolve
+    n "Mai stays by your side as the trail opens up again."
+
+    scene bg schoolway_day_2_night with fade
+    play ambient "subtle_city.ogg"
+
+    if has_flag("jennie_friend"):
+        show i_mai smile2 at character_center_zoom_mai with dissolve
+        mai "So... Jennie's officially not trying to kill you anymore. Congrats."
+        n "I think that was her version of a friendship handshake."
+        mai "She's intense. But maybe she needed someone to pass the test."
+        mc_internal "Whatever it was, I think something shifted."
+
+    elif has_flag("jennie_friend_declined"):
+        show i_mai unsatisfied at character_center_zoom_mai with dissolve
+        mai "That was rough. You sure you didn't want to give her a chance?"
+        n "I wasn't ready. She's... a lot."
+        mai "Yeah. But she notices things most people don't."
+        mc_internal "Part of me wonders if I should've said yes."
+
+    elif outcome("forest_path") == "partial":
+        show i_mai smile1 at character_center_zoom_mai with dissolve
+        mai "Not bad. You almost had her."
+        n "Almost doesn't count, huh?"
+        mai "Nah. But hey — at least I'm not interrogating you in the woods."
+
+    elif outcome("forest_path") == "fail":
+        show i_mai angry1 at character_center_zoom_mai with dissolve
+        mai "You okay?"
+        n "Yeah. Just didn't expect that."
+        mai "Next time, let's take the sidewalk."
+
+    scene black with fade
+    pause 2.5
+    return
